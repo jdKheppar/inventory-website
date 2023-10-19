@@ -1,12 +1,7 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
 import { useState } from "react";
-export const metadata: Metadata = {
-    title: "Form Layout Page | Next.js Inventory Management Website",
-    description: "This is Add supplier page Next.js",
-    // other metadata
-};
+
 
 const AddSupplier = () => {
 

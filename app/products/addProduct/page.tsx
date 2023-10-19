@@ -1,14 +1,9 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
 import { useState } from "react";
 import { Supplier } from "@/types/supplier";
 import { useEffect } from "react";
-export const metadata: Metadata = {
-    title: "Add Product Page | Next.js Inventory Management Website",
-    description: "This is Add Product page Next.js",
-    // other metadata
-};
+
 
 const AddProduct = () => {
     const [fetchedSuppliers, setFetchedSuppliers] = useState<Supplier[]>([]);

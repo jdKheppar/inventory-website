@@ -1,13 +1,8 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
 import { FaUser } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
 
-export const metadata: Metadata = {
-  title: "Profile Page | Next.js E-commerce Dashboard Template",
-  description: "This is Profile page for TailAdmin Next.js",
-  // other metadata
-};
+
 
 const Profile = () => {
 

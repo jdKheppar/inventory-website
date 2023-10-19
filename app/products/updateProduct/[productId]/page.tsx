@@ -1,13 +1,8 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
 import { Supplier } from "@/types/supplier";
 import { useEffect, useState } from 'react';
-export const metadata: Metadata = {
-    title: "Update Product Page | Next.js Inventory Management Website",
-    description: "This is Updte Product page Next.js",
-    // other metadata
-};
+
 
 const UpdateProduct = ({ params }: any) => {
     const productId = params.productId;
