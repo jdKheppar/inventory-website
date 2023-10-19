@@ -84,7 +84,7 @@ const TableFive = () => {
                     <p className="font-medium">Contact Person</p>
                 </div>
                 <div className="col-span-2 flex items-center">
-                    <p className="font-medium">Email</p>
+                    <p className="font-medium">Phone</p>
                 </div>
 
                 <div className="col-span-1 flex items-center">
@@ -111,12 +111,12 @@ const TableFive = () => {
                         </div>
                         <div className="col-span-2 flex items-center">
                             <p className="text-sm text-black dark:text-white">
-                                {supplier.email}
+                                {supplier.phone}
                             </p>
                         </div>
 
                         <div className="col-span-1 flex items-center">
-                            <p className="text-sm text-meta-3">${supplier.address}</p>
+                            <p className="text-sm text-black">{supplier.address}</p>
                         </div>
                         <div className="col-span-1 flex items-center">
                             {/* View, Edit and Delete icons */}
