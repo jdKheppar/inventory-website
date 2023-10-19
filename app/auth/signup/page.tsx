@@ -1,17 +1,12 @@
 "use client";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-export const metadata: Metadata = {
-  title: "Signup Page | Next.js E-commerce Dashboard Template",
-  description: "This is Signup page for TailAdmin Next.js",
-  // other metadata
-};
+
 
 const SignUp: React.FC = () => {
   const router = useRouter();
