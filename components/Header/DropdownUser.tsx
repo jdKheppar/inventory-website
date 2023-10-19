@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { FaUser } from 'react-icons/fa';
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -48,7 +47,19 @@ const DropdownUser = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
 
+  })
+  const getUserDetails = async () => {
+    const res = await axios.get('/api/users/me')
+    console.log(res.data);
+    setUser(res.data.data);
+  }
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   return (
     <div className="relative">
@@ -60,14 +71,14 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Umer Shehzad
+            {user.username}
           </span>
-          <span className="block text-xs">Enterpreneur</span>
+          <span className="block text-xs">Admin</span>
         </span>
         {/*  width={112}
              height={112} */}
 
-        <span className="h-12 w-12 rounded-full">
+        <span className="h-10 w-10 rounded-full flex items-center justify-center">
 
           <FaUser />
         </span>

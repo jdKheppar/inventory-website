@@ -1,16 +1,27 @@
+"use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { FaUser } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 
 
 const Profile = () => {
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
 
-  const user = {
-    name: "Danish Heilium",
-    email: "danish@example.com",
-    role: "Ui/Ux Designer",
-  };
+  })
+  const getUserDetails = async () => {
+    const res = await axios.get('/api/users/me')
+    console.log(res.data);
+    setUser(res.data.data);
+  }
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
 
   return (
     <>
@@ -23,7 +34,7 @@ const Profile = () => {
               <FaUser />
             </div>
             <h3 className="mt-2 text-3xl font-semibold text-black dark:text-white">
-              {user.name}
+              {user.username}
             </h3>
           </div>
           <div className="text-xl mb-4 text-gray-600 dark:text-gray-300">
@@ -33,7 +44,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="text-lg text-primary">
-            {user.role}
+            Admin
           </div>
         </div>
       </div>
