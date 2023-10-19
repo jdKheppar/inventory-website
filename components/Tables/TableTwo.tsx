@@ -1,41 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
-
+import Link from "next/link";
+import { FaEdit, FaTrash, FaEye } from "react-icons/fa"; // Import icons
 
 
 const TableTwo = () => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
 
-  async function uploadProducts() {
-    try {
-      fetch('/api/addP', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: "Apple Watch Series 7",
-          description: "Product of apple for wearing on wrists",
-          price: 296,
-          quantity: 1,
-          unitOfMeasure: "Dollar",
-          category: "Electronics",
-          brand: "Apple",
-          sku: "3345-3434-22",
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
-
-    } catch (error) {
-      console.error("Error adding a product:", error);
-    }
-  }
   async function fetchProducts() {
     try {
-      const response = await fetch("/api/product/getP", {
+      const response = await fetch("/api/product/getPs", {
         method: "GET",
       });
 
@@ -50,9 +25,9 @@ const TableTwo = () => {
       console.error("Error fetching products:", error);
     }
   }
-  async function deleteProduct(productId: any) {
+  async function deleteProduct(productId: string) {
     try {
-      const response = await fetch('/api/products', {
+      const response = await fetch('/api/product/deleteP', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -64,6 +39,10 @@ const TableTwo = () => {
 
       if (response.ok) {
         // Product was successfully deleted
+        // Remove the deleted product from the state
+        setFetchedProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId)
+        );
         return 'Product deleted successfully';
       } else if (response.status === 404) {
         // Product not found
@@ -72,9 +51,19 @@ const TableTwo = () => {
         // Other error
         return 'Failed to delete product';
       }
-    } catch (error) {
+    } catch (error: any) {
       // Network or other errors
-      return 'Error deleting product: ';
+      return 'Error deleting product: ' + error.message;
+    }
+  }
+  // ... (useEffect for fetching products)
+
+  function handleDeleteProduct(productId: any) {
+    const confirmation = window.confirm(
+      'Are you sure you want to delete this product?'
+    );
+    if (confirmation) {
+      deleteProduct(productId);
     }
   }
   // Use useEffect to fetch products when the component loads
@@ -83,12 +72,25 @@ const TableTwo = () => {
     //deleteProduct(2323238293);
 
   }, []);
+
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Top Products
-        </h4>
+        <div className="flex justify-between items-center">
+          <h4 className="text-xl font-semibold text-black dark:text-white">
+            Top Products
+          </h4>
+          <Link href="/products/addProduct">
+            <button
+
+              className="text-xl font-semibold hover:underline cursor-pointer"
+            >
+              Add Product
+            </button>
+          </Link>
+
+        </div>
+
       </div>
 
       <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
@@ -107,6 +109,7 @@ const TableTwo = () => {
         <div className="col-span-1 flex items-center">
           <p className="font-medium">Quntity</p>
         </div>
+
       </div>
 
       {fetchedProducts.map((product, key) => (
@@ -135,7 +138,22 @@ const TableTwo = () => {
             <p className="text-sm text-black dark:text-white">{product.brand}</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="text-sm text-meta-3">${product.quantity}</p>
+            <p className="text-sm text-black">{product.quantity}</p>
+          </div>
+          <div className="col-span-1 flex items-center">
+            {/* View, Edit and Delete icons */}
+            <Link href={`/products/viewProduct/${product._id}`}>
+              <FaEye className="text-green-600 hover:cursor-pointer mx-2" />
+            </Link>
+            <Link href={`/products/updateProduct/${product._id}`}>
+              <FaEdit className="text-blue-600 hover:cursor-pointer mx-2" />
+            </Link>
+
+            <FaTrash
+              onClick={() => handleDeleteProduct(product._id)}
+              className="text-red-600 hover:cursor-pointer mx-2"
+            />
+
           </div>
         </div>
       ))}

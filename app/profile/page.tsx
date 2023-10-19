@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
-import { FaUser } from 'react-icons/fa'; // Import an icon library of your choice
+import { FaUser } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
 
 export const metadata: Metadata = {
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 const Profile = () => {
+
   const user = {
     name: "Danish Heilium",
     email: "danish@example.com",

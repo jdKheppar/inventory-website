@@ -1,130 +1,144 @@
 "use client";
-import Image from "next/image";
-import { Product } from "@/types/product";
 import { useEffect, useState } from "react";
+import { Supplier } from "@/types/supplier";
+import Link from "next/link";
+import { FaEdit, FaTrash, FaEye } from "react-icons/fa"; // Import icons
 
-const productData = [
-    {
-        image: "/images/product/product-01.png",
-        name: "Apple Watch Series 7",
-        category: "Electronics",
-        price: 296,
-        sold: 22,
-        profit: 45,
-    },
-    {
-        image: "/images/product/product-02.png",
-        name: "Macbook Pro M1",
-        category: "Electronics",
-        price: 546,
-        sold: 12,
-        profit: 125,
-    },
-    {
-        image: "/images/product/product-03.png",
-        name: "Dell Inspiron 15",
-        category: "Electronics",
-        price: 443,
-        sold: 64,
-        profit: 247,
-    },
-    {
-        image: "/images/product/product-04.png",
-        name: "HP Probook 450",
-        category: "Electronics",
-        price: 499,
-        sold: 72,
-        profit: 103,
-    },
-];
 
 const TableFive = () => {
-    const [productsJ, setProductsJ] = useState([]);
-    // Use useEffect to fetch products when the component loads
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-    async function fetchProducts() {
+    const [fetchedSuppliers, setFetchedSuppliers] = useState<Supplier[]>([]);
+
+    async function fetchSuppliers() {
         try {
-            const response = await fetch("/api/product", {
+            const response = await fetch("/api/supplier/getS", {
                 method: "GET",
             });
 
             if (!response.ok) {
-                throw new Error("Failed to fetch products");
+                throw new Error("Failed to fetch suppliers");
             }
 
             const data = await response.json();
-            setProductsJ(data.allProducts);
-            console.log(productsJ);
+            setFetchedSuppliers(data.allSuppliers)
+            console.log("fetched suppliers are", fetchedSuppliers);
         } catch (error) {
-            console.error("Error fetching products:", error);
+            console.error("Error fetching suppliers:", error);
         }
     }
+    async function deletesupplier(supplierId: any) {
+        try {
+            const response = await fetch('/api/suppliers', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    supplierId: supplierId,
+                }),
+            });
+
+            if (response.ok) {
+                // supplier was successfully deleted
+                return 'supplier deleted successfully';
+            } else if (response.status === 404) {
+                // supplier not found
+                return 'supplier not found';
+            } else {
+                // Other error
+                return 'Failed to delete supplier';
+            }
+        } catch (error) {
+            // Network or other errors
+            return 'Error deleting supplier: ';
+        }
+    }
+    // Use useEffect to fetch suppliers when the component loads
+    useEffect(() => {
+        fetchSuppliers();
+    }, []);
+
     return (
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="py-6 px-4 md:px-6 xl:px-7.5">
-                <h4 className="text-xl font-semibold text-black dark:text-white">
-                    Top Suplliers
-                </h4>
+                <div className="flex justify-between items-center">
+                    <h4 className="text-xl font-semibold text-black dark:text-white">
+                        Top suppliers
+                    </h4>
+                    <Link href="/suppliers/addSupplier">
+                        <button
+                            className="text-xl font-semibold hover:underline cursor-pointer"
+                        >
+                            Add supplier
+                        </button>
+                    </Link>
+
+                </div>
+
             </div>
 
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-                <div className="col-span-3 flex items-center">
+                <div className="col-span-2 flex items-center">
                     <p className="font-medium">Supplier Name</p>
                 </div>
                 <div className="col-span-2 hidden items-center sm:flex">
-                    <p className="font-medium">Category</p>
+                    <p className="font-medium">Contact Person</p>
                 </div>
-                <div className="col-span-1 flex items-center">
-                    <p className="font-medium">Price</p>
+                <div className="col-span-2 flex items-center">
+                    <p className="font-medium">Email</p>
                 </div>
+
                 <div className="col-span-1 flex items-center">
-                    <p className="font-medium">Sold</p>
-                </div>
-                <div className="col-span-1 flex items-center">
-                    <p className="font-medium">Profit</p>
+                    <p className="font-medium">Address</p>
                 </div>
             </div>
-
-            {productData.map((product, key) => (
-                <div
-                    className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-                    key={key}
-                >
-                    <div className="col-span-3 flex items-center">
-                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                            <div className="h-12.5 w-15 rounded-md">
-                                <Image
-                                    src={product.image}
-                                    width={60}
-                                    height={50}
-                                    alt="Product"
-                                />
+            {fetchedSuppliers && fetchedSuppliers.length > 0 ? (
+                fetchedSuppliers.map((supplier, key) => (
+                    <div
+                        className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+                        key={key}
+                    >
+                        <div className="col-span-2 flex items-center">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                                <p className="text-sm text-black dark:text-white">
+                                    {supplier.name}
+                                </p>
                             </div>
+                        </div>
+                        <div className="col-span-2 hidden items-center sm:flex">
                             <p className="text-sm text-black dark:text-white">
-                                {product.name}
+                                {supplier.contactPerson}
                             </p>
                         </div>
+                        <div className="col-span-2 flex items-center">
+                            <p className="text-sm text-black dark:text-white">
+                                {supplier.email}
+                            </p>
+                        </div>
+
+                        <div className="col-span-1 flex items-center">
+                            <p className="text-sm text-meta-3">${supplier.address}</p>
+                        </div>
+                        <div className="col-span-1 flex items-center">
+                            {/* View, Edit and Delete icons */}
+                            <FaEye
+                                className="text-green-600 hover:cursor-pointer mx-2"
+                            />
+                            <FaEdit
+
+                                className="text-blue-600 hover:cursor-pointer mx-2"
+                            />
+                            <FaTrash
+
+                                className="text-red-600 hover:cursor-pointer mx-2"
+                            />
+
+                        </div>
                     </div>
-                    <div className="col-span-2 hidden items-center sm:flex">
-                        <p className="text-sm text-black dark:text-white">
-                            {product.category}
-                        </p>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                        <p className="text-sm text-black dark:text-white">
-                            ${product.price}
-                        </p>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                        <p className="text-sm text-black dark:text-white">{product.sold}</p>
-                    </div>
-                    <div className="col-span-1 flex items-center">
-                        <p className="text-sm text-meta-3">${product.profit}</p>
-                    </div>
-                </div>
-            ))}
+                ))
+            ) : (
+                <div>No suppliers available.</div>
+            )}
+
         </div>
     );
 };

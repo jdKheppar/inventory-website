@@ -3,15 +3,15 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TableFive from "@/components/Tables/TableFive";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Product Page",
-    description: "This is Product page for Inventory Management System",
+    title: "Supplier Page",
+    description: "This is Supplier page for Inventory Management System",
     // other metadata
 };
 
-const TablesPage = () => {
+const SupplierPage = () => {
     return (
         <>
-            <Breadcrumb pageName="Products" />
+            <Breadcrumb pageName="Suppliers" />
 
             <div className="flex flex-col gap-10">
 
@@ -21,4 +21,4 @@ const TablesPage = () => {
     );
 };
 
-export default TablesPage;
+export default SupplierPage;

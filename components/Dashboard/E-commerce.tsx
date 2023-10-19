@@ -19,6 +19,14 @@ const ECommerce: React.FC = () => {
     <>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <h3>See Inventory Management System Figma Dashboard for more info</h3>
+        <h4>Inventory Summary</h4>
+        <p>Quantity in hand</p>
+        <p>To be received</p>
+        <h4>Product Summary</h4>
+        <p>Number of suppliers</p>
+        <p>Number of categories</p>
+        <h4>Low quantity stock</h4>
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
