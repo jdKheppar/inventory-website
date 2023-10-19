@@ -17,13 +17,13 @@ const SignUp: React.FC = () => {
   })
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const signupKaro = async () => {
+  const signupKaro = async (event: any) => {
+    event.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
       console.log("Signup success", response.data);
       router.push("/auth/signin");
-      alert("Signup successful");
 
     } catch (error: any) {
       console.log("Signup failed", error.message);

@@ -17,7 +17,8 @@ const SignIn: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   // Function to handle the login process
-  const onLogin = async () => {
+  const onLogin = async (event: any) => {
+    event.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
