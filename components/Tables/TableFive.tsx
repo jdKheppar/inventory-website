@@ -10,7 +10,7 @@ const TableFive = () => {
 
     async function fetchSuppliers() {
         try {
-            const response = await fetch("/api/supplier/getS", {
+            const response = await fetch("/api/supplier/getSs", {
                 method: "GET",
             });
 
@@ -25,31 +25,44 @@ const TableFive = () => {
             console.error("Error fetching suppliers:", error);
         }
     }
-    async function deletesupplier(supplierId: any) {
+    async function deleteSupplier(SupplierId: string) {
         try {
-            const response = await fetch('/api/suppliers', {
+            const response = await fetch('/api/supplier/deleteP', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    supplierId: supplierId,
+                    supplierId: SupplierId,
                 }),
             });
 
             if (response.ok) {
-                // supplier was successfully deleted
-                return 'supplier deleted successfully';
+                // Supplier was successfully deleted
+                // Remove the deleted Supplier from the state
+                setFetchedSuppliers((prevSuppliers) =>
+                    prevSuppliers.filter((Supplier) => Supplier._id !== SupplierId)
+                );
+                return 'Supplier deleted successfully';
             } else if (response.status === 404) {
-                // supplier not found
-                return 'supplier not found';
+                // Supplier not found
+                return 'Supplier not found';
             } else {
                 // Other error
-                return 'Failed to delete supplier';
+                return 'Failed to delete Supplier';
             }
-        } catch (error) {
+        } catch (error: any) {
             // Network or other errors
-            return 'Error deleting supplier: ';
+            return 'Error deleting Supplier: ' + error.message;
+        }
+    }
+
+    function handleDeleteSupplier(SupplierId: any) {
+        const confirmation = window.confirm(
+            'Are you sure you want to delete this Supplier?'
+        );
+        if (confirmation) {
+            deleteSupplier(SupplierId);
         }
     }
     // Use useEffect to fetch suppliers when the component loads
@@ -87,7 +100,7 @@ const TableFive = () => {
                     <p className="font-medium">Phone</p>
                 </div>
 
-                <div className="col-span-1 flex items-center">
+                <div className="hidden sm:flex col-span-1 items-center">
                     <p className="font-medium">Address</p>
                 </div>
             </div>
@@ -115,20 +128,20 @@ const TableFive = () => {
                             </p>
                         </div>
 
-                        <div className="col-span-1 flex items-center">
+                        <div className="hidden sm:flex col-span-1 items-center">
                             <p className="text-sm text-black">{supplier.address}</p>
                         </div>
                         <div className="col-span-1 flex items-center">
                             {/* View, Edit and Delete icons */}
-                            <FaEye
-                                className="text-green-600 hover:cursor-pointer mx-2"
-                            />
-                            <FaEdit
+                            <Link href={`/suppliers/viewSupplier/${supplier._id}`}>
+                                <FaEye className="text-green-600 hover:cursor-pointer mx-2" />
+                            </Link>
+                            <Link href={`/suppliers/updateSupplier/${supplier._id}`}>
+                                <FaEdit className="text-blue-600 hover:cursor-pointer mx-2" />
+                            </Link>
 
-                                className="text-blue-600 hover:cursor-pointer mx-2"
-                            />
                             <FaTrash
-
+                                onClick={() => handleDeleteSupplier(supplier._id)}
                                 className="text-red-600 hover:cursor-pointer mx-2"
                             />
 

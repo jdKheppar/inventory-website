@@ -14,7 +14,6 @@ export async function POST(request: any) {
         const newProduct = new Product(body);
         // Save the new product to the database
         const savedProduct = await newProduct.save();
-
         return NextResponse.json({ savedProduct });
     } catch (error) {
         console.error("Error adding a product:", error);

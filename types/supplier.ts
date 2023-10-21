@@ -1,8 +1,8 @@
 export type Supplier = {
-  _id: string;
+  _id?: string;
   name: string;
- contactPerson: string;
- email: string;
+  contactPerson: string;
+  email: string;
   phone: string;
   address: string;
 };

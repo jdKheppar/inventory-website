@@ -56,7 +56,6 @@ const TableTwo = () => {
       return 'Error deleting product: ' + error.message;
     }
   }
-  // ... (useEffect for fetching products)
 
   function handleDeleteProduct(productId: any) {
     const confirmation = window.confirm(
@@ -69,8 +68,6 @@ const TableTwo = () => {
   // Use useEffect to fetch products when the component loads
   useEffect(() => {
     fetchProducts();
-    //deleteProduct(2323238293);
-
   }, []);
 
   return (
