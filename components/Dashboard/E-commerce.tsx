@@ -17,17 +17,11 @@ const MapOne = dynamic(() => import("../Maps/MapOne"), {
 const ECommerce: React.FC = () => {
   return (
     <>
-
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <h3>See Inventory Management System Figma Dashboard for more info</h3>
-        <h4>Inventory Summary</h4>
-        <p>Quantity in hand</p>
-        <p>To be received</p>
-        <h4>Product Summary</h4>
-        <p>Number of suppliers</p>
-        <p>Number of categories</p>
-        <h4>Low quantity stock</h4>
-        <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+
+
+
+        <CardDataStats title="Total Products" total="6"  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -46,7 +40,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
+        <CardDataStats title="Total Categories" total="3"  >
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -69,7 +63,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+        <CardDataStats title="Total Suppliers" total="2"  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -88,7 +82,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Employees" total="3"  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -112,17 +106,11 @@ const ECommerce: React.FC = () => {
           </svg>
         </CardDataStats>
       </div>
-
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        {/* <ChartThree />
-        <MapOne /> */}
-        <div className="col-span-12 xl:col-span-8">
-          <TableTwo />
-        </div>
-        {/* <ChatCard /> */}
+      <div className="mt-2">
+        <TableTwo />
       </div>
+
+
     </>
   );
 };
