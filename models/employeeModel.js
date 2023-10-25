@@ -1,29 +1,42 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
-  Name: {
+  name: {
     type: String,
-    required: true,
+    required: [true, "Please provide the name of the employee"],
   },
   email: {
     type: String,
-    required: true,
     unique: true,
   },
-  phoneNumber: {
+  phone: {
     type: String,
   },
-  role: {
+  address: {
     type: String,
-    required: true,
-    // This could be a predefined set of roles like "Manager," "Sales Associate," etc.
   },
+  position: {
+    type: String,
+  },
+
   hireDate: {
     type: Date,
-    default: Date.now,
+  },
+  salary: {
+    type: Number,
+  },
+
+  workingHours: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ["Active", "On Leave", "Terminated"], // Enum to represent employee status
+    default: "Active", // Default status
   },
 });
 
-const Employee = mongoose.model("Employee", employeeSchema);
+const Employee =
+  mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
 
-module.exports = Employee;
+export default Employee;

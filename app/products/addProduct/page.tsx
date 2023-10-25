@@ -51,7 +51,7 @@ const AddProduct = () => {
     }
     async function fetchSuppliers() {
         try {
-            const response = await fetch("/api/supplier/getS", {
+            const response = await fetch("/api/supplier/getSs", {
                 method: "GET",
             });
 

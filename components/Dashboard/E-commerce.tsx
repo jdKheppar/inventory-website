@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
-import ChartOne from "../Charts/ChartOne";
-import ChartThree from "../Charts/ChartThree";
-import ChartTwo from "../Charts/ChartTwo";
-import ChatCard from "../Chat/ChatCard";
-import TableTwo from "../Tables/TableTwo";
+import TableTwo from "../Tables/TableProduct";
 import CardDataStats from "../CardDataStats";
+import { useState, useEffect } from "react";
+import Product from "@/models/productModel"; // Import your Product model here
+
 // import Map from "../Maps/TestMap";
 
 // without this the component renders on server and throws an error
@@ -15,13 +14,87 @@ const MapOne = dynamic(() => import("../Maps/MapOne"), {
 });
 
 const ECommerce: React.FC = () => {
+  const [totalProducts, setTotalProducts] = useState<string | null>(null);
+  const [totalCategories, setTotalCategories] = useState<string | null>(null);
+  const [totalSuppliers, setTotalSuppliers] = useState<string | null>(null);
+  const [totalEmployees, setTotalEmployees] = useState<string | null>(null);
+
+  // Function to fetch and update total products
+  const fetchTotalProducts = async () => {
+    try {
+      const response = await fetch("/api/product/getPs"); // Update the API endpoint
+      const data = await response.json();
+      setTotalProducts(data.allProducts.length); // Assuming the response has a 'total' property
+    } catch (error) {
+      console.error("Error fetching total products:", error);
+    }
+  };
+
+  // Function to fetch and update total categories
+  const fetchTotalCategories = async () => {
+    try {
+      const response = await fetch("/api/product/getPs"); // Update the API endpoint
+      const data = await response.json();
+      // Extract the 'allProducts' array from the response
+      const allProducts = data.allProducts;
+
+      // Create a Set to store unique categories
+      const uniqueCategories = new Set();
+
+      // Iterate through products and add their categories to the Set
+      allProducts.forEach((product: any) => {
+        if (product.category) {
+          uniqueCategories.add(product.category);
+        }
+      });
+
+      // Get the count of unique categories
+      const count = uniqueCategories.size.toString();
+
+      // Set the count as the total number of categories
+      setTotalCategories(count); // Assuming the response has a 'total' property
+    } catch (error) {
+      console.error("Error fetching total categories:", error);
+    }
+  };
+
+  // Function to fetch and update total suppliers
+  const fetchTotalSuppliers = async () => {
+    try {
+      const response = await fetch("/api/supplier/getSs"); // Update the API endpoint
+      const data = await response.json();
+      setTotalSuppliers(data.allSuppliers.length); // Assuming the response has a 'total' property
+    } catch (error) {
+      console.error("Error fetching total suppliers:", error);
+    }
+  };
+
+  // Function to fetch and update total employees
+  const fetchTotalEmployees = async () => {
+    try {
+      const response = await fetch("/api/employee/getEs"); // Update the API endpoint
+      const data = await response.json();
+      setTotalEmployees(data.allEmployees.length); // Assuming the response has a 'total' property
+    } catch (error) {
+      console.error("Error fetching total employees:", error);
+    }
+  };
+
+  // Fetch data when the component mounts
+  useEffect(() => {
+
+    fetchTotalProducts();
+    fetchTotalCategories();
+    fetchTotalSuppliers();
+    fetchTotalEmployees();
+  }, []);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
 
 
 
-        <CardDataStats title="Total Products" total="6"  >
+        <CardDataStats title="Total Products" total={totalProducts ?? 'Loading...'}  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -40,7 +113,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Categories" total="3"  >
+        <CardDataStats title="Total Categories" total={totalCategories ?? 'Loading...'} >
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -63,7 +136,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Suppliers" total="2"  >
+        <CardDataStats title="Total Suppliers" total={totalSuppliers ?? 'Loading...'}  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -82,7 +155,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Employees" total="3"  >
+        <CardDataStats title="Total Employees" total={totalEmployees ?? 'Loading...'}  >
           <svg
             className="fill-primary dark:fill-white"
             width="22"

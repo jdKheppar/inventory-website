@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
-import TableFive from "@/components/Tables/TableFive";
+import TableSupplier from "@/components/Tables/TableSupplier";
 
 
 
@@ -11,7 +11,7 @@ const SupplierPage = () => {
 
             <div className="flex flex-col gap-10">
 
-                <TableFive />
+                <TableSupplier />
             </div>
         </>
     );

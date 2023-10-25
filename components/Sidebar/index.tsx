@@ -192,7 +192,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/products"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("tables") && "bg-graydark dark:bg-meta-4"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("products") && "bg-graydark dark:bg-meta-4"
                     }`}
                 >
                   <svg
@@ -246,6 +246,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
               {/* <!-- Menu Item Suppliers --> */}
+              {/* <!-- Menu Item Employees --> */}
+              <li>
+                <Link
+                  href="/employees"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("employees") && "bg-graydark dark:bg-meta-4"
+                    }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M14.25 0H3.75C2.76875 0 2 0.76875 2 1.75V5.75H0.75C0.33525 5.75 0 6.08525 0 6.5V16.25C0 16.6647 0.33525 17 0.75 17H17.25C17.6647 17 18 16.6647 18 16.25V6.5C18 6.08525 17.6647 5.75 17.25 5.75H16V1.75C16 0.76875 15.23125 0 14.25 0ZM15.25 7.75H2.75V15.5H15.25V7.75ZM4.5 2.25H13.5V5.5H11.25V6.5C11.25 7.44075 10.49025 8.25 9.5625 8.25H8.4375C7.50975 8.25 6.75 7.44075 6.75 6.5V5.5H4.5V2.25ZM14.25 6.5H14.1568C14.2819 6.19352 14.6547 6 15.0625 6C15.9832 6 16.75 6.76675 16.75 7.6875V15.25H15.25V7.75C15.25 7.33525 14.9148 7 14.5 7H14.25V6.5ZM2.75 1.75C2.75 1.05925 3.30925 0.5 4 0.5H14.25C14.9408 0.5 15.5 1.05925 15.5 1.75V5.5H11.25V2.25H4.5V5.5H0.75C0.33525 5.5 0 5.83525 0 6.25V7H2.75V1.75ZM3.5 14.5H4.5V16.25C4.5 16.6647 4.83525 17 5.25 17H7.5V8.25C7.5 7.48575 8.01425 7.25 8.4375 7.25H9.5625C9.98575 7.25 10.5 7.48575 10.5 8.25V17H13.5C13.9148 17 14.25 16.6647 14.25 16.25V14.5H15.25V15.25H3.5V14.5Z"
+                      fill="white"
+                    />
+                  </svg>
+
+                  Employees
+                </Link>
+              </li>
+              {/* <!-- Menu Item Employees --> */}
 
             </ul>
           </div>

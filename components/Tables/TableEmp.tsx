@@ -1,73 +1,73 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Supplier } from "@/types/supplier";
+import { Employee } from "@/types/employee";
 import Link from "next/link";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa"; // Import icons
 
 
-const TableFive = () => {
-    const [fetchedSuppliers, setFetchedSuppliers] = useState<Supplier[]>([]);
+const TableEmp = () => {
+    const [fetchedEmployees, setFetchedEmployees] = useState<Employee[]>([]);
 
-    async function fetchSuppliers() {
+    async function fetchEmployees() {
         try {
-            const response = await fetch("/api/supplier/getSs", {
+            const response = await fetch("/api/employee/getEs", {
                 method: "GET",
             });
 
             if (!response.ok) {
-                throw new Error("Failed to fetch suppliers");
+                throw new Error("Failed to fetch employees");
             }
 
             const data = await response.json();
-            setFetchedSuppliers(data.allSuppliers)
-            console.log("fetched suppliers are", fetchedSuppliers);
+            setFetchedEmployees(data.allEmployees)
+            console.log("fetched Employees are", fetchedEmployees);
         } catch (error) {
-            console.error("Error fetching suppliers:", error);
+            console.error("Error fetching Employees:", error);
         }
     }
-    async function deleteSupplier(SupplierId: string) {
+    async function deleteEmployee(EmployeeId: string) {
         try {
-            const response = await fetch('/api/supplier/deleteP', {
+            const response = await fetch('/api/employee/deleteE', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    supplierId: SupplierId,
+                    employeeId: EmployeeId,
                 }),
             });
 
             if (response.ok) {
-                // Supplier was successfully deleted
-                // Remove the deleted Supplier from the state
-                setFetchedSuppliers((prevSuppliers) =>
-                    prevSuppliers.filter((Supplier) => Supplier._id !== SupplierId)
+                // Employee was successfully deleted
+                // Remove the deleted Employee from the state
+                setFetchedEmployees((prevEmployees) =>
+                    prevEmployees.filter((Employee) => Employee._id !== EmployeeId)
                 );
-                return 'Supplier deleted successfully';
+                return 'Employee deleted successfully';
             } else if (response.status === 404) {
-                // Supplier not found
-                return 'Supplier not found';
+                // Employee not found
+                return 'Employee not found';
             } else {
                 // Other error
-                return 'Failed to delete Supplier';
+                return 'Failed to delete Employee';
             }
         } catch (error: any) {
             // Network or other errors
-            return 'Error deleting Supplier: ' + error.message;
+            return 'Error deleting Employee: ' + error.message;
         }
     }
 
-    function handleDeleteSupplier(SupplierId: any) {
+    function handleDeleteEmployee(EmployeeId: any) {
         const confirmation = window.confirm(
-            'Are you sure you want to delete this Supplier?'
+            'Are you sure you want to delete this Employee?'
         );
         if (confirmation) {
-            deleteSupplier(SupplierId);
+            deleteEmployee(EmployeeId);
         }
     }
     // Use useEffect to fetch suppliers when the component loads
     useEffect(() => {
-        fetchSuppliers();
+        fetchEmployees();
     }, []);
 
     return (
@@ -75,13 +75,13 @@ const TableFive = () => {
             <div className="py-6 px-4 md:px-6 xl:px-7.5">
                 <div className="flex justify-between items-center">
                     <h4 className="text-xl font-semibold text-black dark:text-white">
-                        Top suppliers
+                        Top Employees
                     </h4>
-                    <Link href="/suppliers/addSupplier">
+                    <Link href="/employees/addEmployee">
                         <button
                             className="text-xl font-semibold hover:underline cursor-pointer"
                         >
-                            Add supplier
+                            All Employee
                         </button>
                     </Link>
 
@@ -91,21 +91,21 @@ const TableFive = () => {
 
             <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
                 <div className="col-span-2 flex items-center">
-                    <p className="font-medium">Supplier Name</p>
+                    <p className="font-medium">Employee Name</p>
                 </div>
                 <div className="col-span-2 hidden items-center sm:flex">
-                    <p className="font-medium">Contact Person</p>
+                    <p className="font-medium">Position</p>
                 </div>
                 <div className="col-span-2 flex items-center">
-                    <p className="font-medium">Phone</p>
+                    <p className="font-medium">Salary</p>
                 </div>
 
                 <div className="hidden sm:flex col-span-1 items-center">
-                    <p className="font-medium">Address</p>
+                    <p className="font-medium">Working Hours</p>
                 </div>
             </div>
-            {fetchedSuppliers && fetchedSuppliers.length > 0 ? (
-                fetchedSuppliers.map((supplier, key) => (
+            {fetchedEmployees && fetchedEmployees.length > 0 ? (
+                fetchedEmployees.map((employee, key) => (
                     <div
                         className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
                         key={key}
@@ -113,35 +113,35 @@ const TableFive = () => {
                         <div className="col-span-2 flex items-center">
                             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                                 <p className="text-sm text-black dark:text-white">
-                                    {supplier.name}
+                                    {employee.name}
                                 </p>
                             </div>
                         </div>
                         <div className="col-span-2 hidden items-center sm:flex">
                             <p className="text-sm text-black dark:text-white">
-                                {supplier.contactPerson}
+                                {employee.position}
                             </p>
                         </div>
                         <div className="col-span-2 flex items-center">
                             <p className="text-sm text-black dark:text-white">
-                                {supplier.phone}
+                                {employee.salary}
                             </p>
                         </div>
 
                         <div className="hidden sm:flex col-span-1 items-center">
-                            <p className="text-sm text-black">{supplier.address}</p>
+                            <p className="text-sm text-black">{employee.workingHours}</p>
                         </div>
                         <div className="col-span-1 flex items-center">
                             {/* View, Edit and Delete icons */}
-                            <Link href={`/suppliers/viewSupplier/${supplier._id}`}>
+                            <Link href={`/employees/viewEmployee/${employee._id}`}>
                                 <FaEye className="text-green-600 hover:cursor-pointer mx-2" />
                             </Link>
-                            <Link href={`/suppliers/updateSupplier/${supplier._id}`}>
+                            <Link href={`/employees/updateEmployee/${employee._id}`}>
                                 <FaEdit className="text-blue-600 hover:cursor-pointer mx-2" />
                             </Link>
 
                             <FaTrash
-                                onClick={() => handleDeleteSupplier(supplier._id)}
+                                onClick={() => handleDeleteEmployee(employee._id)}
                                 className="text-red-600 hover:cursor-pointer mx-2"
                             />
 
@@ -149,11 +149,11 @@ const TableFive = () => {
                     </div>
                 ))
             ) : (
-                <div>No suppliers available.</div>
+                <div className="m-4">No employees available.</div>
             )}
 
         </div>
     );
 };
 
-export default TableFive;
+export default TableEmp;
