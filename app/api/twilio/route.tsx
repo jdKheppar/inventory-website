@@ -6,7 +6,7 @@ const client = twilio(
     process.env.TWILIO_AUTH_TOKEN
 );
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const twiml = new twilio.twiml.MessagingResponse();
 
     // Check if the request is a Twilio message
