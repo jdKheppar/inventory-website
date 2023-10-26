@@ -40,8 +40,8 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
   const [user, setUser] = useState({
-    username: "User Name",
-    email: "Email",
+    username: "",
+    email: "",
 
   })
   const getUserDetails = async () => {

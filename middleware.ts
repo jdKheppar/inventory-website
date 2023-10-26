@@ -25,6 +25,7 @@ export const config = {
   matcher: [
     '/',
     '/profile',
+    '/twilio',
     '/auth/signin',
     '/auth/signup',
     '/verifyemail',

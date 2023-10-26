@@ -50,6 +50,7 @@ const AddProduct = () => {
         }
     }
     async function fetchSuppliers() {
+
         try {
             const response = await fetch("/api/supplier/getSs", {
                 method: "GET",
@@ -135,7 +136,7 @@ const AddProduct = () => {
                                     value={formData.quantity}
                                     onChange={handleInputChange}
                                     type="number"
-                                    min="0"
+                                    min="1"
                                     placeholder="Enter the product quntity or stock"
                                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                 />
