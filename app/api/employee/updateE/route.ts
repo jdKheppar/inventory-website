@@ -1,29 +1,29 @@
 import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
-import Supplier from "@/models/supplierModel";
+import Employee from "@/models/employeeModel";
 
 connect();
 
 
-// Update supplier information
+// Update Employee information
 export async function PUT(request: any) {
     if (request.method !== "PUT") {
         return new NextResponse("Method not allowed", { status: 405 });
     }
 
     let body = await request.json();
-    const { supplierId, updatedSupplier } = body;
+    const { employeeId, updatedEmployee } = body;
 
     try {
-        const result = await Supplier.findByIdAndUpdate(supplierId, updatedSupplier);
+        const result = await Employee.findByIdAndUpdate(employeeId, updatedEmployee);
 
         if (result) {
             return NextResponse.json({ success: true });
         } else {
-            return new NextResponse("Supplier not found", { status: 404 });
+            return new NextResponse("Employee not found", { status: 404 });
         }
     } catch (error) {
-        console.error("Error updating supplier:", error);
+        console.error("Error updating employee:", error);
 
         return new NextResponse("Internal Server Error", { status: 500 });
     }

@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel";
+import Supplier from "@/models/supplierModel";
 
 connect();
 
-// Get all the products from the database
+// Get all the suppliers from the database
 export async function GET(request: any) {
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {
 
-        const allProducts = await Product.aggregate([
+        const allSuppliers = await Supplier.aggregate([
             {
                 $match: {
                     $or: [
@@ -32,12 +32,12 @@ export async function GET(request: any) {
         ]);
 
 
-        console.log(allProducts);
-        return NextResponse.json({ allProducts });
+        console.log(allSuppliers);
+        return NextResponse.json({ allSuppliers });
     }
 
     catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching suppliers in search:", error);
 
         return new NextResponse("Internal server error", { status: 500 });
     }
