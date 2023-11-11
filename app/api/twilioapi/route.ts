@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request: any) {
     try {
         // Fetch the message from the request body
-        const { Body } = await request.json();
+        const { Body } = await request.body;
 
         // Create reply
         console.log("The message received is", Body);
