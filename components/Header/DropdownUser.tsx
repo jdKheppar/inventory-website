@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FaUser } from 'react-icons/fa';
 import axios from "axios";
-import toast from "react-hot-toast";
 
 const DropdownUser = () => {
 
@@ -45,9 +44,12 @@ const DropdownUser = () => {
 
   })
   const getUserDetails = async () => {
-    const res = await axios.get('/api/users/me')
-    console.log(res.data);
-    setUser(res.data.data);
+    try {
+      const res = await axios.get('/api/users/me');
+      setUser(res.data.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }
   useEffect(() => {
     getUserDetails();
