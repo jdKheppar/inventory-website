@@ -1,20 +1,28 @@
 // pages/api/sms.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
+import { NextResponse } from 'next/server';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        // Fetch the message
-        const msg = req.body.Body;
+export async function POST(request: any) {
+    try {
+        // Fetch the message from the request body
+        const { Body } = await request.json();
 
         // Create reply
         const twiml = new MessagingResponse();
-        twiml.message(`You said: ${msg}`);
+        twiml.message(`You said: ${Body}`);
 
-        res.setHeader('Content-Type', 'text/xml');
-        res.status(200).end(twiml.toString());
-    } else {
-        res.setHeader('Allow', 'POST');
-        res.status(405).end('Method Not Allowed');
+        return new NextResponse(twiml.toString(), {
+            status: 200,
+            headers: { 'Content-Type': 'application/xml' }, // TwiML should be served as XML
+        });
+    } catch (error) {
+        console.error('Error', error);
+
+        return new NextResponse('Internal server error', { status: 500 });
     }
 }
+
+
+
+
+
