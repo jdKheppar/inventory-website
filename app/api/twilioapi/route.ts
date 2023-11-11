@@ -2,15 +2,15 @@
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 import { NextResponse } from 'next/server';
 
+
 export async function POST(request: any) {
     try {
         // Fetch the message from the request body
-        const Body = await request.body;
-
+        const { Body } = await request.body;
+        const contentType = request.headers['content-type'];
         // Create reply
-        console.log("The message received is", Body);
         const twiml = new MessagingResponse();
-        twiml.message(`You said: ${Body}`);
+        twiml.message(`You said: ${contentType}`);
 
         return new NextResponse(twiml.toString(), {
             status: 200,
