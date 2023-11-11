@@ -1,32 +1,20 @@
+// pages/api/sms.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import twilio from 'twilio';
+import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 
-const client = twilio(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-);
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method === 'POST') {
+        // Fetch the message
+        const msg = req.body.Body;
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const twiml = new twilio.twiml.MessagingResponse();
-
-    // Check if the request is a Twilio message
-    if (req.body && req.body.From) {
-        const messageBody = req.body.Body;
-        const fromNumber = req.body.From;
-
-
-        // Handle the incoming message
-        console.log(`Received message from ${fromNumber}: ${messageBody}`);
-
-        // Your logic for processing the incoming message and forming a reply
-        const reply = 'Thank you for your message!';
-
-        // Send a reply
-        twiml.message(reply);
+        // Create reply
+        const twiml = new MessagingResponse();
+        twiml.message(`You said: ${msg}`);
 
         res.setHeader('Content-Type', 'text/xml');
-        res.status(200).send(twiml.toString());
+        res.status(200).end(twiml.toString());
     } else {
-        res.status(400).end();
+        res.setHeader('Allow', 'POST');
+        res.status(405).end('Method Not Allowed');
     }
 }
