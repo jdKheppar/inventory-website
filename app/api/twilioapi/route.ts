@@ -8,6 +8,7 @@ export async function POST(request: any) {
         const { Body } = await request.json();
 
         // Create reply
+        console.log("The message received is", Body);
         const twiml = new MessagingResponse();
         twiml.message(`You said: ${Body}`);
 
