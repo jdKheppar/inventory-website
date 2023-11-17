@@ -1,12 +1,12 @@
-// pages/api/sms.ts
+
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 import { NextResponse, NextRequest } from 'next/server';
 import { NextApiRequest } from 'next';
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
     try {
         // Fetch the message from the request body
-        const { Body } = await request.body;
+        const Body = request.body;
         // Create reply
         const twiml = new MessagingResponse();
         twiml.message(`You said: ${Body}`);
