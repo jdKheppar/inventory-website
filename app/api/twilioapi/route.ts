@@ -5,7 +5,6 @@ export async function POST(req: any) {
 
     try {
         const message = req.Parameters;
-        console.log(`Received message from ${message.From}: ${message.Body}`);
 
         const twiml = new MessagingResponse();
         twiml.message(`You said: ${message.Body}`);
