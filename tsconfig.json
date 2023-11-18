@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/forms/viewProduct/[productId]", "app/products/updateProduct/[productId]/page.jsx", "app/api/twilioapi/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/forms/viewProduct/[productId]", "app/products/updateProduct/[productId]/page.jsx", "app/api/twilioapi/route.js"],
   "exclude": ["node_modules"]
 }
