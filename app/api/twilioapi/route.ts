@@ -3,7 +3,7 @@ import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 export async function POST(req: any, res: any) {
 
     try {
-        const message = req.body;
+        const message = req.Parameters;
         console.log(`Received message from ${message.From}: ${message.Body}`);
 
         const twiml = new MessagingResponse();
