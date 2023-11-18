@@ -1,41 +1,19 @@
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
-import { NextResponse, NextRequest } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: any, res: any) {
+
     try {
-        const contentType = request.headers.get('content-type');
+        const message = req.body;
+        console.log(`Received message from ${message.From}: ${message.Body}`);
 
-        if (contentType === 'application/json') {
-            const { Body } = await request.json();
+        const twiml = new MessagingResponse();
+        twiml.message(`You said: ${message.Body}`);
 
-            // Create reply for JSON request
-            const twiml = new MessagingResponse();
-            twiml.message(`You said (JSON): ${Body}`);
-
-            return new NextResponse(twiml.toString(), {
-                status: 200,
-                headers: { 'Content-Type': 'application/xml' }, // TwiML should be served as XML
-            });
-
-        } else if (contentType === 'application/xml') {
-            const body = await request.text();
-
-            // Create reply for XML request
-            const twiml = new MessagingResponse();
-            twiml.message(`You said (XML): ${body}`);
-
-            return new NextResponse(twiml.toString(), {
-                status: 200,
-                headers: { 'Content-Type': 'application/xml' }, // TwiML should be served as XML
-            });
-
-        } else {
-            return new NextResponse('Unsupported content type', { status: 415 });
-        }
-
+        res.setHeader('Content-Type', 'text/xml');
+        res.status(200).send(twiml.toString());
     } catch (error) {
-        console.error('Error', error);
-
-        return new NextResponse('Internal server error', { status: 500 });
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
     }
 }
+
