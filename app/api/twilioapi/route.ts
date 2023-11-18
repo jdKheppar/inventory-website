@@ -1,12 +1,13 @@
 import MessagingResponse from "twilio/lib/twiml/MessagingResponse";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   try {
     const message = await req.body;
-    console.log(message);
+    console.log("message is", message);
+
     const twiml = new MessagingResponse();
-    twiml.message(`You said: ${message.Body}`);
+    twiml.message(`You said: ${message}`);
 
     return new NextResponse(twiml.toString(), {
       status: 200,
