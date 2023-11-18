@@ -1,6 +1,7 @@
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
+import { NextResponse, NextRequest } from 'next/server';
 
-export async function POST(req: any, res: any) {
+export async function POST(req: any) {
 
     try {
         const message = req.Parameters;
@@ -9,11 +10,14 @@ export async function POST(req: any, res: any) {
         const twiml = new MessagingResponse();
         twiml.message(`You said: ${message.Body}`);
 
-        res.setHeader('Content-Type', 'text/xml');
-        res.status(200).send(twiml.toString());
+        return new NextResponse(twiml.toString(), {
+            status: 200,
+            headers: { 'Content-Type': 'application/xml' },
+        });
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error', error);
+
+        return new NextResponse('Internal server error', { status: 500 });
     }
 }
 
