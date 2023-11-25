@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(req: any) {
   try {
     const message = await req.body;
-    console.log("message(req.json) is:", message);
+    console.log("message(req.body) is:", message);
     console.log("message.parameters is:", message.parameters);
     console.log("message.body is:", message.Body);
     const twiml = new MessagingResponse();
