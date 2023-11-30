@@ -1,4 +1,4 @@
-import Excel from "@/components/spreadsheet/Excel";
+import Excel from "@/components/Spreadsheet/Excel";
 
 export default function Upload() {
   return (
