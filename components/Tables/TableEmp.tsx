@@ -81,7 +81,7 @@ const TableEmp = () => {
                         <button
                             className="text-xl font-semibold hover:underline cursor-pointer"
                         >
-                            All Employee
+                            Add Employee
                         </button>
                     </Link>
 

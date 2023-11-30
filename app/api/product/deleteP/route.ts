@@ -5,8 +5,6 @@ import Product from "@/models/productModel"; // Import your Product model here
 connect();
 
 
-
-
 // Delete a product from the database
 export async function DELETE(request: any) {
     try {
