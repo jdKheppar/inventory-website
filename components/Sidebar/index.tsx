@@ -246,6 +246,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
               {/* <!-- Menu Item Suppliers --> */}
+              {/* <!-- Menu Item Upload --> */}
+              <li>
+                <Link
+                  href="/upload"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("upload") && "bg-graydark dark:bg-meta-4"
+                    }`}
+                >
+                  <img src="upload.png" />
+
+                  Upload Data
+                </Link>
+              </li>
+              {/* <!-- Menu Item Upload --> */}
               {/* <!-- Menu Item Employees --> */}
               <li>
                 <Link

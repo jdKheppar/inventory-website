@@ -1,33 +1,59 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-const AddSupplier = () => {
-
+const UpdateSupplier = ({ params }: any) => {
+    const supplierId = params.supplierId;
     // Define state variables for form data
     const [formData, setFormData] = useState({
-        name: '',
-        contactPerson: '',
-        email: '',
-        phone: '',
-        address: '',
+        supplierId: supplierId,
+        updatedSupplier: {
+            name: '',
+            contactPerson: '',
+            email: '',
+            phone: '',
+            address: '',
+        }
     });
+    async function fetchSupplierDetails(supplierId: string) {
+        try {
+            const response = await fetch(`/api/supplier/getS?id=${supplierId}`, {
+                method: "GET",
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch supplier details');
+            }
+            const supplierData = await response.json();
+            setFormData({
+                ...formData,
+                updatedSupplier: supplierData.supplier
+            });
+        } catch (error) {
+            console.error('Error fetching supplier details:', error);
+        }
+    }
     // Handle form input changes
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        setFormData((prevData) => ({
+            ...prevData,
+            updatedSupplier: {
+                ...prevData.updatedSupplier,
+                [name]: value
+            }
+        }));
+        console.log("Form Data", formData);
     };
 
     // Handle form submission and API call
-    async function uploadSupplier() {
+    async function update_Supplier(event: any) {
+        //e.preventDefault(); e: React.FormEvent<HTMLFormElement>
+        //event.preventDefault();
         try {
             console.log(formData);
-            fetch('/api/supplier/addS', {
-                method: 'POST',
+            fetch('/api/supplier/updateS', {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -41,18 +67,27 @@ const AddSupplier = () => {
             console.error("Error adding a supplier:", error);
         }
     }
+
+    useEffect(() => {
+        if (supplierId) {
+            // Fetch supplier details based on supplierId and populate the form fields
+            console.log(supplierId)
+            fetchSupplierDetails(supplierId as string);
+        }
+
+    }, [supplierId]); // Run this effect when supplierId changes
     return (
         <>
-            <Breadcrumb pageName="Add supplier" />
+            <Breadcrumb pageName="Update supplier" />
             <div className="flex flex-col gap-9 items-center justify-center">
                 {/* <!-- Add supplier Form --> */}
                 <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
-                            Add Details of the Supplier
+                            Edit Details of the Supplier
                         </h3>
                     </div>
-                    <form onSubmit={uploadSupplier}>
+                    <form onSubmit={update_Supplier}>
                         <div className="p-6.5">
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 <div className="w-full xl:w-1/2">
@@ -61,7 +96,7 @@ const AddSupplier = () => {
                                     </label>
                                     <input
                                         name="name"
-                                        value={formData.name}
+                                        value={formData.updatedSupplier.name}
                                         onChange={handleInputChange}
                                         type="text"
                                         placeholder="Enter the supplier name"
@@ -75,7 +110,7 @@ const AddSupplier = () => {
                                     </label>
                                     <input
                                         name="contactPerson"
-                                        value={formData.contactPerson}
+                                        value={formData.updatedSupplier.contactPerson}
                                         onChange={handleInputChange}
                                         type="text"
 
@@ -91,7 +126,7 @@ const AddSupplier = () => {
                                 </label>
                                 <input
                                     name="email"
-                                    value={formData.email}
+                                    value={formData.updatedSupplier.email}
                                     onChange={handleInputChange}
                                     type="email"
                                     placeholder="Enter the email"
@@ -105,7 +140,7 @@ const AddSupplier = () => {
                                 </label>
                                 <input
                                     name="phone"
-                                    value={formData.phone}
+                                    value={formData.updatedSupplier.phone}
                                     onChange={handleInputChange}
                                     type="text"
                                     placeholder="Enter the supplier sku"
@@ -119,7 +154,7 @@ const AddSupplier = () => {
                                 </label>
                                 <textarea
                                     name="address"
-                                    value={formData.address}
+                                    value={formData.updatedSupplier.address}
                                     onChange={handleInputChange}
                                     rows={6}
                                     placeholder="Enter the address here"
@@ -128,7 +163,7 @@ const AddSupplier = () => {
                             </div>
 
                             <button type="submit" className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                                Add Supplier
+                                Update Supplier
                             </button>
                         </div>
                     </form>
@@ -138,4 +173,4 @@ const AddSupplier = () => {
     );
 };
 
-export default AddSupplier;
+export default UpdateSupplier;

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 export type Product = {
   _id?: string;
   name: string;
@@ -8,4 +9,5 @@ export type Product = {
   category: string;
   brand: string;
   sku: string;
+  supplier: mongoose.Schema.Types.ObjectId;
 };

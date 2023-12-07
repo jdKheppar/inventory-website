@@ -14,7 +14,7 @@ const UpdateProduct = ({ params }: any) => {
             name: '',
             price: 0,
             category: '',
-            quantity: 1,
+            quantity: 0,
             sku: '',
             brand: '',
             unitOfMeasure: '',
@@ -57,7 +57,7 @@ const UpdateProduct = ({ params }: any) => {
     // Handle form submission and API call
     async function update_Product(event: any) {
         //e.preventDefault(); e: React.FormEvent<HTMLFormElement>
-        event.preventDefault();
+        //event.preventDefault();
         try {
             console.log(formData);
             fetch('/api/product/updateP', {

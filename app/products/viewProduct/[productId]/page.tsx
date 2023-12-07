@@ -97,7 +97,7 @@ const ViewProduct = ({ params }: any) => {
             </div>
 
             <div className="my-4">
-                <Link href="/supplier-details"> {/* Replace with your supplier details page */}
+                <Link href={`/suppliers/viewSupplier/${product.supplier}`}> {/* Replace with your supplier details page */}
                     <a className="text-xl text-blue-600 hover:underline">Click here for supplier details</a>
                 </Link>
             </div>
