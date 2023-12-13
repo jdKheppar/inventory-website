@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useSession, signOut } from "next-auth/react";
 
 
 
@@ -21,6 +22,9 @@ const Profile = () => {
     console.log(res.data);
     setUser(res.data.data);
   }
+  const { data } = useSession();
+
+  console.log(data);
   const logout = async () => {
     try {
       await axios.get('/api/users/logout')

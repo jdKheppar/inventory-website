@@ -1,35 +1,35 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Supplier } from "@/types/supplier";
+import { Employee } from "@/types/employee";
 import Link from "next/link";
 
-const ViewSupplier = ({ params }: any) => {
-    const supplierId = params.supplierId;
-    const [supplier, setSupplier] = useState<Supplier | null>(null);
+const ViewEmployee = ({ params }: any) => {
+    const employeeId = params.employeeId;
+    const [employee, setEmployee] = useState<Employee | null>(null);
 
     useEffect(() => {
-        if (supplierId) {
-            // Fetch supplier details based on supplierId
-            fetchsupplierDetails(supplierId as string); // Cast supplierId to string
+        if (employeeId) {
+            // Fetch employee details based on employeeId
+            fetchEmployeeDetails(employeeId as string); // Cast employeeId to string
         }
-    }, [supplierId]);
+    }, [employeeId]);
 
-    async function fetchsupplierDetails(supplierId: string) {
+    async function fetchEmployeeDetails(employeeId: string) {
         try {
-            const response = await fetch(`/api/supplier/getS?id=${supplierId}`, {
+            const response = await fetch(`/api/employee/getE?id=${employeeId}`, {
                 method: "GET",
             });
             if (!response.ok) {
-                throw new Error('Failed to fetch supplier details');
+                throw new Error('Failed to fetch employee details');
             }
-            const supplierData = await response.json();
-            setSupplier(supplierData.supplier);
+            const employeeData = await response.json();
+            setEmployee(employeeData.employee);
         } catch (error) {
-            console.error('Error fetching supplier details:', error);
+            console.error('Error fetching employee details:', error);
         }
     }
 
-    if (!supplier) {
+    if (!employee) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-2xl font-bold text-gray-700 dark:text-white">
@@ -42,15 +42,15 @@ const ViewSupplier = ({ params }: any) => {
     return (
         <div className="min-h-screen p-4">
             <div className="text-3xl font-bold text-gray-800 dark:text-white">
-                Supplier Details
+                Employee Details
             </div>
 
             <div className="my-4">
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
-                    Supplier Name:
+                    Employee Name:
                 </div>
                 <div className="text-lg text-gray-800 dark:text-white">
-                    {supplier.name}
+                    {employee.name}
                 </div>
             </div>
 
@@ -58,28 +58,57 @@ const ViewSupplier = ({ params }: any) => {
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
                     Contact person name:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">${supplier.contactPerson}</div>
+                <div className="text-lg text-gray-800 dark:text-white">${employee.position}</div>
             </div>
 
             <div className="my-4">
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
                     Email address:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">{supplier.email}</div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.email}</div>
             </div>
 
             <div className="my-4">
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
                     Phone:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">{supplier.phone}</div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.phone}</div>
             </div>
 
             <div className="my-4">
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
                     Address:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">{supplier.address}</div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.address}</div>
+            </div>
+            <div className="my-4">
+                <div className="text-xl font-semibold text-gray-700 dark:text-white">
+                    Hire Date:
+                </div>
+                <div className="text-lg text-gray-800 dark:text-white">
+                    {new Date(employee.hireDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                    })}
+                </div>            </div>
+            <div className="my-4">
+                <div className="text-xl font-semibold text-gray-700 dark:text-white">
+                    Salary:
+                </div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.salary}</div>
+            </div>
+            <div className="my-4">
+                <div className="text-xl font-semibold text-gray-700 dark:text-white">
+                    Working Hours:
+                </div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.workingHours}</div>
+            </div>
+            <div className="my-4">
+                <div className="text-xl font-semibold text-gray-700 dark:text-white">
+                    Status:
+                </div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.status}</div>
             </div>
 
 
@@ -87,4 +116,4 @@ const ViewSupplier = ({ params }: any) => {
     );
 };
 
-export default ViewSupplier;
+export default ViewEmployee;

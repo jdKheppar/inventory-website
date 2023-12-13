@@ -32,7 +32,7 @@ const SignUp: React.FC = () => {
       const response = await axios.post("/api/users/signup", userData);
       console.log("Signup success", response.data);
       router.push("/auth/signin");
-
+      alert("Verification email sent to your email address");
     } catch (error: any) {
       console.log("Signup failed", error.message);
       alert("signup failed");

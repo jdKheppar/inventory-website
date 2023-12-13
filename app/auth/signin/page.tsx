@@ -5,12 +5,12 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { useRouter } from "next/navigation";
 import axios from "axios"; // Make sure you have Axios installed
 import { toast } from "react-hot-toast";
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 
 
 
 const SignIn: React.FC = () => {
-  const session = useSession();
+
   const router = useRouter();
   const [user, setUser] = useState({
     email: "",
