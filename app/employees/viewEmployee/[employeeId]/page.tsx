@@ -56,9 +56,9 @@ const ViewEmployee = ({ params }: any) => {
 
             <div className="my-4">
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
-                    Contact person name:
+                    Employee position:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">${employee.position}</div>
+                <div className="text-lg text-gray-800 dark:text-white">{employee.position}</div>
             </div>
 
             <div className="my-4">

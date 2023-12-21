@@ -22,21 +22,28 @@ const Profile = () => {
     console.log(res.data);
     setUser(res.data.data);
   }
-  const { data } = useSession();
+  const { data: session, status } = useSession()
 
-  console.log(data);
+
   const logout = async () => {
     try {
       await axios.get('/api/users/logout')
       //toast.success('Logout successful')
-      router.push('/auth/signin')
+      router.push('/')
     } catch (error: any) {
       console.log(error.message);
       toast.error(error.message)
     }
   }
   useEffect(() => {
-    getUserDetails();
+
+    if (!session) {
+      getUserDetails();
+    }
+    else {
+      //for getting data from session.user.email etc
+    }
+
   }, []);
 
 

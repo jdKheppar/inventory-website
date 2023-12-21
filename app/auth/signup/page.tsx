@@ -1,11 +1,11 @@
 "use client";
-import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { signIn } from 'next-auth/react'
 
 
 const SignUp: React.FC = () => {
@@ -31,7 +31,7 @@ const SignUp: React.FC = () => {
       setLoading(true);
       const response = await axios.post("/api/users/signup", userData);
       console.log("Signup success", response.data);
-      router.push("/auth/signin");
+      router.push("/");
       alert("Verification email sent to your email address");
     } catch (error: any) {
       console.log("Signup failed", error.message);
@@ -347,7 +347,8 @@ const SignUp: React.FC = () => {
                 </div>
 
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50"
+                  onClick={() => signIn("google")}>
                   <span>
                     <svg
                       width="20"
@@ -381,13 +382,13 @@ const SignUp: React.FC = () => {
                       </defs>
                     </svg>
                   </span>
-                  Sign up with Google
+                  Sign in with Google
                 </button>
 
                 <div className="mt-6 text-center">
                   <p>
                     Already have an account?{" "}
-                    <Link href="/auth/signin" className="text-primary">
+                    <Link href="/" className="text-primary">
                       Sign in
                     </Link>
                   </p>

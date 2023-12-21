@@ -58,7 +58,7 @@ const ViewSupplier = ({ params }: any) => {
                 <div className="text-xl font-semibold text-gray-700 dark:text-white">
                     Contact person name:
                 </div>
-                <div className="text-lg text-gray-800 dark:text-white">${supplier.contactPerson}</div>
+                <div className="text-lg text-gray-800 dark:text-white">{supplier.contactPerson}</div>
             </div>
 
             <div className="my-4">

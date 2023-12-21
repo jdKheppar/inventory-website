@@ -8,7 +8,6 @@ connect();
 export async function GET(request: any) {
   try {
     const allProducts = await Product.find({}); // Use the Product model to find all products
-
     return NextResponse.json({ allProducts });
   } catch (error) {
     console.error("Error fetching products:", error);
