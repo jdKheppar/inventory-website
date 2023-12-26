@@ -21,7 +21,6 @@ const TableProduct = () => {
 
       const data = await response.json();
       setFetchedProducts(data.allProducts)
-      console.log("fethed porducts are", fetchedProducts);
     } catch (error) {
       console.error("Error fetching products:", error);
     }

@@ -39,22 +39,23 @@ export async function POST(request: NextRequest) {
             email: user.email
         }
         //create token
-        let token;
-        try {
-            token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" });
-        } catch (error) {
-            return NextResponse.json({ error: "Error in jwt" }, { status: 500 });
-        }
+        // let token;
+        // try {
+        //     token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" });
+        // } catch (error) {
+        //     return NextResponse.json({ error: "Error in jwt" }, { status: 500 });
+        // }
 
 
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
         })
-        response.cookies.set("token", token, {
-            httpOnly: true,
+        // response.cookies.set("token", token, {
+        //     httpOnly: true,
 
-        })
+        // })
+
         return response;
 
     } catch (error: any) {

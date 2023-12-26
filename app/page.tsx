@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { useRouter } from "next/navigation";
-import axios from "axios"; // Make sure you have Axios installed
 import { toast } from "react-hot-toast";
 import { signIn } from 'next-auth/react'
 
@@ -21,15 +20,32 @@ const Home = () => {
   // Function to handle the login process
   const onLogin = async (event: any) => {
     event.preventDefault();
+    const { email, password } = user;
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", user);
-      console.log("Login success", response.data);
-      toast.success("Login success");
-      router.push("/dashboard");
+      const data = await signIn("credentials", {
+        redirect: true,
+        email,
+        password,
+      });
+
+      if (data) {
+        const { status } = data;
+        if (status == 200) {
+          console.log("Login success", data);
+          toast.success("Login success");
+          router.push("/dashboard");
+        }
+        else if (status == 401) {
+          alert("Wrong Credentials");
+        }
+
+      }
+
+      console.log(data);
     } catch (error: any) {
-      console.log("Login failed");
       const errorMessage = error.response.data.error;
+      console.log(error);
       let newState = {
         email: "",
         password: "",
@@ -44,8 +60,8 @@ const Home = () => {
       } else {
         alert("Login failed");
       }
-
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -352,3 +368,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

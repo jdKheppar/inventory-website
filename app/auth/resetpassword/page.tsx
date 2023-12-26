@@ -34,7 +34,7 @@ const ResetPassword: React.FC = () => {
       setLoading(true);
       const response = await axios.post("/api/users/resetpassword", userData);
       console.log("New password set", response.data);
-      router.push("/auth/signin");
+      router.push("/");
 
     } catch (error: any) {
       console.log("Reset password failed", error.message);

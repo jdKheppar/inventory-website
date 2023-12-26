@@ -21,7 +21,6 @@ const TableEmp = () => {
 
             const data = await response.json();
             setFetchedEmployees(data.allEmployees)
-            console.log("fetched Employees are", fetchedEmployees);
         } catch (error) {
             console.error("Error fetching Employees:", error);
         }

@@ -21,7 +21,6 @@ const TableSupplier = () => {
 
             const data = await response.json();
             setFetchedSuppliers(data.allSuppliers)
-            console.log("fetched suppliers are", fetchedSuppliers);
         } catch (error) {
             console.error("Error fetching suppliers:", error);
         }
