@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useSession, signOut } from "next-auth/react";
 
 
 
@@ -18,11 +17,16 @@ const Profile = () => {
 
   })
   const getUserDetails = async () => {
-    const res = await axios.get('/api/users/me')
-    console.log(res.data);
-    setUser(res.data.data);
-  }
-  const { data: session, status } = useSession()
+    try {
+      const res = await axios.get('/api/users/me');
+      console.log(res.data);
+      setUser(res.data.data);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      // Handle the error here - you might want to set an error state or perform other actions
+    }
+  };
+
 
 
   const logout = async () => {
@@ -36,13 +40,7 @@ const Profile = () => {
     }
   }
   useEffect(() => {
-
-    if (!session) {
-      getUserDetails();
-    }
-    else {
-      //for getting data from session.user.email etc
-    }
+    getUserDetails();
 
   }, []);
 
@@ -58,7 +56,7 @@ const Profile = () => {
               <FaUser />
             </div>
             <h3 className="mt-2 text-3xl font-semibold text-black dark:text-white">
-              {user.username}
+              {user.username ? user.username : "Username"}
             </h3>
           </div>
           <div className="text-xl mb-4 text-gray-600 dark:text-gray-300">
@@ -70,7 +68,7 @@ const Profile = () => {
           <div className="text-lg text-primary">
             Admin
           </div>
-          <button onClick={() => signOut()} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button onClick={() => logout()} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <svg
               className="fill-current"
               width="22"

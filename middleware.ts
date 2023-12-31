@@ -1,36 +1,33 @@
-import { withAuth } from "next-auth/middleware"
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export default withAuth(
-    async function middleware(request) { },
-    {
-        pages: {
-            //signIn: '/',
-            error: '/auth/error', // Error code passed in query string as ?error=
 
-            newUser: '/dashboard' // New users will be directed here on first sign in (leave the property out if not of interest)
-        },
-        callbacks: {
-            authorized: ({ req, token }) => {
+export function middleware(request: NextRequest) {
+    const path = request.nextUrl.pathname
 
-                if (
-                    // req.nextUrl.pathname.startsWith('/protected') &&
-                    token === null
-                ) {
-                    return false
-                }
-                return true
-            }
-        }
+    const isPublicPath = path === '/' || path === '/auth/signup' || path === 'auth/verifyemail' || path === 'auth/forgetpassword' || path === 'auth/resetpassword'
+
+    const token = request.cookies.get('token')?.value || ''
+
+    if (isPublicPath && token) {
+        return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
     }
-)
 
+    if (!isPublicPath && !token) {
+        return NextResponse.redirect(new URL('/', request.nextUrl))
+    }
+
+}
+
+
+// See "Matching Paths" below to learn more
 export const config = {
     matcher: [
-
+        '/',
         '/profile',
-        '/upload',
-        '/settings',
         '/dashboard',
+        '/auth/signup',
+        '/settings',
         '/products/:path*',
         '/suppliers/:path*',
         '/employees/:path*'

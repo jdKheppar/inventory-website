@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Supplier from "@/models/supplierModel";
 
-connect();
+
 
 export async function GET(request: any) {
+    connect(request);
     try {
         const url = new URL(request.url);
         const supplierName = url.searchParams.get("name");

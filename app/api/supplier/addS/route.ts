@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Supplier from "@/models/supplierModel";
 
-connect();
 
 
 // Add a new supplier to the database
 export async function POST(request: any) {
+    connect(request);
     let body = await request.json();
 
     try {

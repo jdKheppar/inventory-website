@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel";
 
-connect();
+
 
 
 // Update Employee information
 export async function PUT(request: any) {
+    await connect(request);
     if (request.method !== "PUT") {
         return new NextResponse("Method not allowed", { status: 405 });
     }

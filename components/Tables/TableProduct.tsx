@@ -115,10 +115,7 @@ const TableProduct = () => {
           <div className="hidden sm:block">
             <div className="relative">
               <button
-
                 className="absolute left-0 top-1/2 -translate-y-1/2"
-
-
               >
                 <svg
                   className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"

@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Supplier from "@/models/supplierModel";
 
-connect();
+
 
 // Get all the suppliers from the database
 export async function GET(request: any) {
+    connect(request);
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {

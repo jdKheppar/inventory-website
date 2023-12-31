@@ -227,7 +227,7 @@ const TableSupplier = () => {
                     </div>
                 ))
             ) : (
-                <div>No suppliers available.</div>
+                <div className="py-6 px-4 md:px-6 xl:px-7.5">No suppliers available.</div>
             )}
 
         </div>

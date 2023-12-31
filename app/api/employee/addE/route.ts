@@ -2,14 +2,13 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel";
 
-connect();
-
-
-// Add a new supplier to the database
+// Add a new employee to the database
 export async function POST(request: any) {
+
     let body = await request.json();
 
     try {
+        await connect(request);
         const newEmployee = new Employee(body);
 
         const savedEmployee = await newEmployee.save();

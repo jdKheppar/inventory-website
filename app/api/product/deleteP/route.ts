@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Product from "@/models/productModel"; // Import your Product model here
 
-connect();
+
 
 
 // Delete a product from the database
 export async function DELETE(request: any) {
+    connect(request);
     try {
         const body = await request.json();
         const { productId } = body;

@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel";
 
-connect();
+
 
 // Get all Employees from the database
 export async function GET(request: any) {
+    await connect(request);
     try {
         const allEmployees = await Employee.find({});
 

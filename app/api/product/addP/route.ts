@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Product from "@/models/productModel"; // Import your Product model here
 
-connect();
 
 
 // Add a product to the database
 export async function POST(request: any) {
+    connect(request);
     let body = await request.json();
 
     try {

@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel";
 
-connect();
+
 
 // Get all the employees from the database
 export async function GET(request: any) {
+    await connect(request);
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {

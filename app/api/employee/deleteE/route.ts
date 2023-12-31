@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel";
 
-connect();
+
 
 
 // Delete a supplier from the database
 export async function DELETE(request: any) {
+    await connect(request);
     try {
         const body = await request.json();
         const { employeeId } = body;

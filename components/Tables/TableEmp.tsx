@@ -226,7 +226,7 @@ const TableEmp = () => {
                     </div>
                 ))
             ) : (
-                <div className="m-4">No employees available.</div>
+                <div className="py-6 px-4 md:px-6 xl:px-7.5">No employees available.</div>
             )}
 
         </div>

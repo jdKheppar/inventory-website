@@ -3,9 +3,7 @@ import React from "react";
 import TableTwo from "../Tables/TableProduct";
 import CardDataStats from "../CardDataStats";
 import { useState, useEffect } from "react";
-import Product from "@/models/productModel"; // Import your Product model here
 
-// import Map from "../Maps/TestMap";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";

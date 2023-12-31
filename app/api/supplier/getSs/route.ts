@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Supplier from "@/models/supplierModel";
 
-connect();
+
 
 // Get all suppliers from the database
 export async function GET(request: any) {
+    await connect(request);
     try {
         const allSuppliers = await Supplier.find({});
 

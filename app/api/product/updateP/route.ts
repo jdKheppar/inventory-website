@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Product from "@/models/productModel"; // Import your Product model here
 
-connect();
+
 // Update a product information
 export async function PUT(request: any) {
+    connect(request);
     if (request.method !== "PUT") {
         return new NextResponse("Method not allowed", { status: 405 });
     }

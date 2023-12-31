@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Employee from "@/models/employeeModel"; // Import your Product model here
 
-connect();
+
 // Create a new API route for getting employee details by _id
 export async function GET(request: any) {
+    await connect(request);
     try {
 
         const url = new URL(request.url);
