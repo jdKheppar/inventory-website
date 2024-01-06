@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
+import { connect } from "@/dbConfig/userCon";
 import Employee from "@/models/employeeModel";
 
 
 
 // Get all Employees from the database
 export async function GET(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
+    await connect(phone);
     try {
         const allEmployees = await Employee.find({});
 

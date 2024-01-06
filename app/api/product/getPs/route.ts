@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
+import { connect } from "@/dbConfig/userCon";
 import Product from "@/models/productModel"; // Import your Product model here
+
+
 
 // Get all the products from the database
 export async function GET(request: any) {
-  await connect(request);
+  let phone = await getPhoneFromToken(request);
+  await connect(phone);
+
   try {
     const allProducts = await Product.find({}); // Use the Product model to find all products
     return NextResponse.json({ allProducts });

@@ -176,7 +176,7 @@ const ECommerce: React.FC = () => {
         </CardDataStats>
       </div>
       <div className="mt-2">
-        <TableTwo />
+        {/* <TableTwo /> */}
       </div>
 
 

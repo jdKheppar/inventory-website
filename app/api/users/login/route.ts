@@ -4,10 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-connect()
+
 
 export async function POST(request: NextRequest) {
+    await connect("UsersDB");
     try {
+        // const databaseName = 'UsersDB'; // Replace with your database name
+        // const db = mongoose.connection.useDb(databaseName);
 
         const reqBody = await request.json()
         const { email, password } = reqBody;
