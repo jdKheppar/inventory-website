@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-let isConnected: boolean = false;
 
 export async function connect(request: NextRequest) {
     try {
