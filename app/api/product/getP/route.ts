@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel"; // Import your Product model here
+import createProductModel from "@/models/productModel"; // Import your Product model here
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Create a new API route for getting product details by _id
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
-
+        let Product=createProductModel(phone);
         const url = new URL(request.url);
         const id = url.searchParams.get("id");
         if (!id) {
@@ -16,7 +16,7 @@ export async function GET(request: any) {
 
         // Use the Product model to find the product by _id
         const product = await Product.findById(id);
-
+        Product.db.close();
         if (product) {
             return NextResponse.json({ product });
         } else {

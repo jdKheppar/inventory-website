@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel"; // Import your Product model here
+import createProductModel from "@/models/productModel"; // Import your Product model here
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Update a product information
 export async function PUT(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     if (request.method !== "PUT") {
         return new NextResponse("Method not allowed", { status: 405 });
     }
@@ -14,9 +14,10 @@ export async function PUT(request: any) {
     const { productId, updatedProduct } = body;
 
     try {
+        let Product=createProductModel(phone);
         // Use the Product model to update the product
         const result = await Product.findByIdAndUpdate(productId, updatedProduct);
-
+        Product.db.close();
         if (result) {
             return NextResponse.json({ success: true });
         } else {

@@ -29,8 +29,8 @@ const AddProduct = () => {
     };
 
     // Handle form submission and API call
-    async function uploadProducts() {
-        //e.preventDefault(); e: React.FormEvent<HTMLFormElement>
+    async function uploadProducts(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault(); 
 
         try {
             console.log(formData);
@@ -42,7 +42,22 @@ const AddProduct = () => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) =>{
+                    const initialFormData = {
+                        name: '',
+                        price: 0,
+                        category: '',
+                        quantity: 1,
+                        sku: '',
+                        brand: '',
+                        unitOfMeasure: '',
+                        supplier: '', // Add a state variable for the selected supplier
+                        description: ''
+                    };
+                    setFormData(initialFormData);
+                    alert("Product added successfully");
+                    console.log(data)
+                })
                 .catch((error) => console.error(error));
 
         } catch (error) {

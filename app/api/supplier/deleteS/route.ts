@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Supplier from "@/models/supplierModel";
+import createSupplierModel from "@/models/supplierModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 
 // Delete a supplier from the database
 export async function DELETE(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
+        let Supplier=createSupplierModel(phone);
         const body = await request.json();
         const { supplierId } = body;
 
         const deletedSupplier = await Supplier.findByIdAndDelete(supplierId);
-
+        Supplier.db.close();
         if (deletedSupplier) {
             return NextResponse.json({ message: "Supplier deleted successfully" });
         } else {

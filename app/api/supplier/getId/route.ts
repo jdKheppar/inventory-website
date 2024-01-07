@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Supplier from "@/models/supplierModel";
+import createSupplierModel from "@/models/supplierModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
+        let Supplier=createSupplierModel(phone);
         const url = new URL(request.url);
         const supplierName = url.searchParams.get("name");
-
+        Supplier.db.close();
         if (!supplierName) {
             return new NextResponse("Supplier name is required", { status: 400 });
         }

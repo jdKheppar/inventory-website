@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel";
+import createProductModel from "@/models/productModel"; // Import your Product model here
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 // Get all the products from the database
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {
+        let Product=createProductModel(phone);
 
         const allProducts = await Product.aggregate([
             {
@@ -32,8 +33,8 @@ export async function GET(request: any) {
             },
         ]);
 
-
-        console.log(allProducts);
+        Product.db.close();
+        //console.log(allProducts);
         return NextResponse.json({ allProducts });
     }
 

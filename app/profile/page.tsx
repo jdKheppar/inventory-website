@@ -19,7 +19,7 @@ const Profile = () => {
   const getUserDetails = async () => {
     try {
       const res = await axios.get('/api/users/me');
-      console.log(res.data);
+      console.log("User details got from api are:",res.data);
       setUser(res.data.data);
     } catch (error) {
       console.error('Error fetching user details:', error);
@@ -56,13 +56,13 @@ const Profile = () => {
               <FaUser />
             </div>
             <h3 className="mt-2 text-3xl font-semibold text-black dark:text-white">
-              {user.username ? user.username : "Username"}
+              {user?.username ? user.username : "Username"}
             </h3>
           </div>
           <div className="text-xl mb-4 text-gray-600 dark:text-gray-300">
             <div className="flex items-center justify-center gap-2">
               <HiOutlineMail />
-              {user.email}
+              {user?.email}
             </div>
           </div>
           <div className="text-lg text-primary">

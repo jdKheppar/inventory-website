@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel";
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 // Add a new employee to the database
 export async function POST(request: any) {
-
-    let body = await request.json();
-
+    let phone = await getPhoneFromToken(request);
     try {
-        await connect(request);
+        let body = await request.json();
+        let Employee=createEmployeeModel(phone);
         const newEmployee = new Employee(body);
 
         const savedEmployee = await newEmployee.save();
-
+        Employee.db.close();
         return NextResponse.json({ savedEmployee });
     } catch (error) {
         console.error("Error adding a employee:", error);

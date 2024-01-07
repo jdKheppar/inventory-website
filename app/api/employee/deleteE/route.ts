@@ -1,19 +1,18 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel";
-
-
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Delete a supplier from the database
 export async function DELETE(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
         const body = await request.json();
         const { employeeId } = body;
+        let Employee=createEmployeeModel(phone);
 
         const deletedEmployee = await Employee.findByIdAndDelete(employeeId);
-
+        Employee.db.close();
         if (deletedEmployee) {
             return NextResponse.json({ message: "Employee deleted successfully" });
         } else {

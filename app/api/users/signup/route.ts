@@ -1,11 +1,8 @@
-import { connect } from "@/dbConfig/userCon";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
 
-
-connect()
 
 
 export async function POST(request: NextRequest) {
@@ -17,6 +14,7 @@ export async function POST(request: NextRequest) {
 
         //check if user already exists
         const user = await User.findOne({ email })
+        User.db.close();    
 
         if (user) {
             return NextResponse.json({ error: "User already exists" }, { status: 400 })

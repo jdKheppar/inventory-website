@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Supplier from "@/models/supplierModel";
+import createSupplierModel from "@/models/supplierModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 // Get all the suppliers from the database
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {
-
+        let Supplier=createSupplierModel(phone);
         const allSuppliers = await Supplier.aggregate([
             {
                 $match: {
@@ -33,7 +33,8 @@ export async function GET(request: any) {
         ]);
 
 
-        console.log(allSuppliers);
+        //console.log(allSuppliers);
+        Supplier.db.close();
         return NextResponse.json({ allSuppliers });
     }
 

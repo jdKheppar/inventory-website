@@ -20,7 +20,13 @@ const supplierSchema = new mongoose.Schema({
   },
 });
 
-const Supplier =
-  mongoose.models.Supplier || mongoose.model("Supplier", supplierSchema);
+const createSupplierModel = (dbName) => {
+  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-export default Supplier;
+  return PhoneDB.models.Supplier || PhoneDB.model('Supplier', supplierSchema );
+};
+
+export default createSupplierModel;

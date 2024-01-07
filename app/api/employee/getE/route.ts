@@ -1,22 +1,22 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel"; // Import your Product model here
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Create a new API route for getting employee details by _id
 export async function GET(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
-
+        
         const url = new URL(request.url);
         const id = url.searchParams.get("id");
         if (!id) {
             return new NextResponse("Employee ID is required", { status: 400 });
         }
-
+        let Employee=createEmployeeModel(phone);
         // Use the Employee model to find the employee by _id
         const employee = await Employee.findById(id);
-
+        Employee.db.close();
         if (employee) {
             return NextResponse.json({ employee });
         } else {

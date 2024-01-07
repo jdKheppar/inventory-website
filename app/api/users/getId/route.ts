@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { connect } from "@/dbConfig/userCon";
 import User from "@/models/userModel";
 
-connect()
+
 
 
 
 export async function GET(request: any) {
+    await connect("UsersDB");
     try {
         const url = new URL(request.url);
         const emailAddress = url.searchParams.get("email");

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel";
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 export async function GET(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
         const url = new URL(request.url);
         const employeeName = url.searchParams.get("name");
@@ -12,10 +12,11 @@ export async function GET(request: any) {
         if (!employeeName) {
             return new NextResponse("Employee name is required", { status: 400 });
         }
+        let Employee=createEmployeeModel(phone);
 
         // Use the employee model to find the employee by name
         const employee = await Employee.findOne({ name: employeeName });
-
+        Employee.db.close();
         if (employee) {
             return NextResponse.json({ _id: employee._id }); // Return the _id corresponding to the employee name
         } else {

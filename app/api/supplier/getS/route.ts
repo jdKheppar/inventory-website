@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Supplier from "@/models/supplierModel"; // Import your Product model here
+import createSupplierModel from "@/models/supplierModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Create a new API route for getting product details by _id
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
+        let Supplier=createSupplierModel(phone);
 
         const url = new URL(request.url);
         const id = url.searchParams.get("id");
@@ -16,7 +17,7 @@ export async function GET(request: any) {
 
         // Use the Supplier model to find the supplier by _id
         const supplier = await Supplier.findById(id);
-
+        Supplier.db.close();
         if (supplier) {
             return NextResponse.json({ supplier });
         } else {

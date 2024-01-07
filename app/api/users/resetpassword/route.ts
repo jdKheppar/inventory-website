@@ -1,9 +1,8 @@
-import { connect } from "@/dbConfig/userCon";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import bcryptjs from "bcryptjs";
 
-connect()
+
 
 export async function POST(request: NextRequest) {
 
@@ -14,6 +13,7 @@ export async function POST(request: NextRequest) {
         console.log(token);
 
         const user = await User.findOne({ forgotPasswordToken: token, forgotPasswordTokenExpiry: { $gt: Date.now() } });
+        User.db.close();
 
         if (!user) {
             return NextResponse.json({ error: "Invalid token" }, { status: 400 })

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -36,10 +35,20 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Supplier",
   },
-  // You can add more attributes as needed, such as product category, images, etc.
 });
 
-const Product =
-  mongoose.models.Product || mongoose.model("Product", productSchema);
+// const Product =
+//   conn.UsersDB.mongoose.models.Product || conn.UsersDB.mongoose.model("Product", productSchema);
 
-export default Product;
+
+
+const createProductModel = (dbName) => {
+  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  return PhoneDB.models.Product || PhoneDB.model('Product', productSchema );
+};
+
+export default createProductModel;

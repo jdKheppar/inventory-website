@@ -27,7 +27,7 @@ const Home = () => {
       toast.success("Login success");
       router.push("/dashboard");
     } catch (error: any) {
-      console.log("Login failed");
+      console.log("Login failed",error);
       const errorMessage = error.response.data.error;
 
       if (errorMessage === "noUser") {

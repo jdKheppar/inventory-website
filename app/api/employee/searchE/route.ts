@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel";
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 // Get all the employees from the database
 export async function GET(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
     const query = request.nextUrl.searchParams.get("query");
     console.log("The query is: ", query);
     try {
-
+        let Employee=createEmployeeModel(phone);
         const allEmployees = await Employee.aggregate([
             {
                 $match: {
@@ -32,8 +32,8 @@ export async function GET(request: any) {
             },
         ]);
 
-
-        console.log(allEmployees);
+        Employee.db.close();
+        //console.log(allEmployees);
         return NextResponse.json({ allEmployees });
     }
 

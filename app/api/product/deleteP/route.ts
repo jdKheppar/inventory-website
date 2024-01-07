@@ -1,20 +1,21 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel"; // Import your Product model here
+import createProductModel from "@/models/productModel"; // Import your Product model here
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 
 // Delete a product from the database
 export async function DELETE(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
+        let Product=createProductModel(phone);
         const body = await request.json();
         const { productId } = body;
 
         // Use the Product model to delete the product
         const deletedProduct = await Product.findByIdAndDelete(productId);
-
+        Product.db.close();
         if (deletedProduct) {
             return NextResponse.json({ message: "Product deleted successfully" });
         } else {

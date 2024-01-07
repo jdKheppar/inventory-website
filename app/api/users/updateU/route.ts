@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/userCon";
 import User from "@/models/userModel";
 
-connect();
+
 
 
 // Update user information
@@ -17,6 +16,7 @@ export async function PUT(request: any) {
 
     try {
         const result = await User.findByIdAndUpdate(userId, updatedUser);
+        User.db.close();
 
         if (result) {
             return NextResponse.json({ success: true });

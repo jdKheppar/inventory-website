@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Employee from "@/models/employeeModel";
+import createEmployeeModel from "@/models/employeeModel";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 
 
 // Update Employee information
 export async function PUT(request: any) {
-    await connect(request);
+    let phone = await getPhoneFromToken(request);
     if (request.method !== "PUT") {
         return new NextResponse("Method not allowed", { status: 405 });
     }
@@ -16,8 +16,9 @@ export async function PUT(request: any) {
     const { employeeId, updatedEmployee } = body;
 
     try {
+        let Employee=createEmployeeModel(phone);
         const result = await Employee.findByIdAndUpdate(employeeId, updatedEmployee);
-
+        Employee.db.close();
         if (result) {
             return NextResponse.json({ success: true });
         } else {

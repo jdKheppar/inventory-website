@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { connect } from "@/dbConfig/dbConfig";
-import Product from "@/models/productModel"; // Import your Product model here
+import createProductModel from "@/models/productModel"; // Import your Product model here
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
 
 // Create a new API route for getting product details by name
 export async function GET(request: any) {
-    connect(request);
+    let phone = await getPhoneFromToken(request);
     try {
+        let Product=createProductModel(phone);
         const url = new URL(request.url);
         const productName = url.searchParams.get("name"); // Retrieve product name from query parameter
 
@@ -16,7 +17,7 @@ export async function GET(request: any) {
 
         // Use the Product model to find the product by name
         const product = await Product.findOne({ name: productName });
-
+        Product.db.close();
         if (product) {
             return NextResponse.json({ _id: product._id }); // Return the _id corresponding to the product name
         } else {

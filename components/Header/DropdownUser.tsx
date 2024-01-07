@@ -39,8 +39,8 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
   const [user, setUser] = useState({
-    username: "",
-    email: "",
+    username: "User Name",
+    email: "Email Address",
 
   })
   const getUserDetails = async () => {
@@ -65,7 +65,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user.username}
+            {user?.username}
           </span>
           <span className="block text-xs">User Name</span>
         </span>

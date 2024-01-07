@@ -23,7 +23,8 @@ const AddSupplier = () => {
     };
 
     // Handle form submission and API call
-    async function uploadSupplier() {
+    async function uploadSupplier(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         try {
             console.log(formData);
             fetch('/api/supplier/addS', {

@@ -24,6 +24,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/forms/viewProduct/[productId]", "app/products/updateProduct/[productId]/page.jsx", "app/api/twilioapi/route.js", "app/api/auth/[...nextauth].js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/forms/viewProduct/[productId]", "app/products/updateProduct/[productId]/page.jsx", "app/api/twilioapi/route.js", "app/api/auth/[...nextauth].js", "dbConfig/userCon.ts"],
   "exclude": ["node_modules"]
 }

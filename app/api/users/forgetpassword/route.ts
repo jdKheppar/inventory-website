@@ -1,9 +1,8 @@
-import { connect } from "@/dbConfig/userCon";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/helpers/mailer";
 
-connect()
+
 
 export async function POST(request: NextRequest) {
     try {
@@ -11,9 +10,8 @@ export async function POST(request: NextRequest) {
         const { email } = reqBody
 
         //check if user already exists
-        const user = await User.findOne({ email })
-
-        console.log("user returned by mongodb", user);
+        const user = await User.findOne({ email });
+        User.db.close();
         if (user) {
             //send verification email
             console.log("user", user);

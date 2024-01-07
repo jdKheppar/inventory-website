@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema({
   verifyTokenExpiry: Date,
 });
 
-const User = mongoose.models.users || mongoose.model("users", userSchema);
+const UsersDB=mongoose.createConnection(process.env.USERS_MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const User = UsersDB.models.users || UsersDB.model("users", userSchema);
 
 export default User;

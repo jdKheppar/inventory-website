@@ -36,7 +36,18 @@ const employeeSchema = new mongoose.Schema({
   },
 });
 
-const Employee =
-  mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
+// const Employee =
+//   mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
 
-export default Employee;
+// export default Employee;
+
+const createEmployeeModel = (dbName) => {
+  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  return PhoneDB.models.Employee || PhoneDB.model('Employee', employeeSchema );
+};
+
+export default createEmployeeModel;

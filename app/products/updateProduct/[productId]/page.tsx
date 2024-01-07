@@ -22,6 +22,7 @@ const UpdateProduct = ({ params }: any) => {
             description: ''
         }
     });
+    
 
     async function fetchProductDetails(productId: string) {
         try {
@@ -57,7 +58,7 @@ const UpdateProduct = ({ params }: any) => {
     // Handle form submission and API call
     async function update_Product(event: any) {
         //e.preventDefault(); e: React.FormEvent<HTMLFormElement>
-        //event.preventDefault();
+        event.preventDefault();
         try {
             console.log(formData);
             fetch('/api/product/updateP', {
@@ -68,7 +69,11 @@ const UpdateProduct = ({ params }: any) => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    
+                    console.log(data);
+                    alert("Operation Successful");
+                })
                 .catch((error) => console.error(error));
 
         } catch (error) {
