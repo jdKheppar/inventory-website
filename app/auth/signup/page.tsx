@@ -35,7 +35,14 @@ const SignUp: React.FC = () => {
       alert("Verification email sent to your email address");
     } catch (error: any) {
       console.log("Signup failed", error.message);
-      alert("signup failed");
+      const errorMessage = error.response.data.error;
+      if(errorMessage==="Userexists"){
+        alert("User already exists");
+      }
+      else{
+        alert("signup failed");
+      }
+      
       toast.error(error.message);
     } finally {
       setLoading(false);

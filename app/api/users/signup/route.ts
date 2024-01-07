@@ -3,21 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
 
-
-
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
         const { username, email, phone, password } = reqBody
 
-        console.log(reqBody);
 
         //check if user already exists
         const user = await User.findOne({ email })
-        User.db.close();    
+        console.log("checking if code reaches here user",user);
 
         if (user) {
-            return NextResponse.json({ error: "User already exists" }, { status: 400 })
+            return NextResponse.json({ error: "Userexists" }, { status: 400 })
         }
 
         //hash password
@@ -30,13 +27,12 @@ export async function POST(request: NextRequest) {
             phone,
             password: hashedPassword
         })
-
-        const savedUser = await newUser.save()
+        const savedUser = await newUser.save();
 
         //send verification email
 
         await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id })
-
+        User.db.close();
         return NextResponse.json({
             message: "User created successfully",
             success: true,

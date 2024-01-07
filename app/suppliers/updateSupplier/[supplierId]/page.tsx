@@ -49,7 +49,7 @@ const UpdateSupplier = ({ params }: any) => {
     // Handle form submission and API call
     async function update_Supplier(event: any) {
         //e.preventDefault(); e: React.FormEvent<HTMLFormElement>
-        //event.preventDefault();
+        event.preventDefault();
         try {
             console.log(formData);
             fetch('/api/supplier/updateS', {
@@ -60,7 +60,10 @@ const UpdateSupplier = ({ params }: any) => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    alert("Supplier updated successfully");
+                    console.log(data)
+                })
                 .catch((error) => console.error(error));
 
         } catch (error) {

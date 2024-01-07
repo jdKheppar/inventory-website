@@ -53,7 +53,7 @@ const UpdateEmployee = ({ params }: any) => {
     // Handle form submission and API call
     async function update_Employee(event: any) {
 
-        //event.preventDefault();
+        event.preventDefault();
         try {
             console.log(formData);
             fetch('/api/employee/updateE', {
@@ -64,7 +64,10 @@ const UpdateEmployee = ({ params }: any) => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) =>{
+                    console.log(data);
+                    alert("Employee updated successfully");
+                })
                 .catch((error) => console.error(error));
 
         } catch (error) {

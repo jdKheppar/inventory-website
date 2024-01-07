@@ -15,6 +15,17 @@ const AddEmployee = () => {
         workingHours: '',
         status: 'Active',
     });
+    let initialEmployee = {
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        position: '',
+        hireDate: '',
+        salary: 0,
+        workingHours: '',
+        status: 'Active',
+    };
 
     // Handle form input changes
     const handleInputChange = (e: any) => {
@@ -26,7 +37,8 @@ const AddEmployee = () => {
     };
 
     // Handle form submission and API call
-    async function uploadEmployee() {
+    async function uploadEmployee(event: any) {
+        event.preventDefault();
         try {
             console.log(formData);
             fetch('/api/employee/addE', {
@@ -37,7 +49,10 @@ const AddEmployee = () => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    alert("Employee added successfully");
+                    setFormData(initialEmployee);
+                    console.log(data)})
                 .catch((error) => console.error(error));
 
         } catch (error) {

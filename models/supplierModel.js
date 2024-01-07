@@ -21,7 +21,7 @@ const supplierSchema = new mongoose.Schema({
 });
 
 const createSupplierModel = (dbName) => {
-  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}`, {
+  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

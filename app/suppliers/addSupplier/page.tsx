@@ -13,6 +13,13 @@ const AddSupplier = () => {
         phone: '',
         address: '',
     });
+    let initialSupplier={
+        name: '',
+        contactPerson: '',
+        email: '',
+        phone: '',
+        address: '',
+    }
     // Handle form input changes
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -35,7 +42,10 @@ const AddSupplier = () => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    alert("Supplier added successfully");
+                    setFormData(initialSupplier);
+                    console.log(data)})
                 .catch((error) => console.error(error));
 
         } catch (error) {
