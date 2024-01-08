@@ -26,7 +26,11 @@ const SignUp: React.FC = () => {
     }
     // Exclude repassword from the user data
     const { repassword, ...userData } = user;
-
+    if (user.phone.startsWith('+')) {
+      // Replace the first three characters with '0'
+      userData.phone = '0' + user.phone.substring(3);
+    }
+    console.log("userData is: ", userData);
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", userData);
@@ -36,13 +40,13 @@ const SignUp: React.FC = () => {
     } catch (error: any) {
       console.log("Signup failed", error.message);
       const errorMessage = error.response.data.error;
-      if(errorMessage==="Userexists"){
+      if (errorMessage === "Userexists") {
         alert("User already exists");
       }
-      else{
+      else {
         alert("signup failed");
       }
-      
+
       toast.error(error.message);
     } finally {
       setLoading(false);
