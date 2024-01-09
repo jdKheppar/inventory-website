@@ -1,7 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createSupplierModel from "@/models/supplierModel";
-import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
+//import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
+import jwt from "jsonwebtoken";
 
+const getPhoneFromToken = (request: NextRequest) => {
+    try {
+        const token = request.cookies.get("token")?.value || '';
+        const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+        return decodedToken.phone;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+
+}
 
 
 
@@ -9,7 +20,7 @@ import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 export async function DELETE(request: any) {
     let phone = await getPhoneFromToken(request);
     try {
-        let Supplier=createSupplierModel(phone);
+        let Supplier = createSupplierModel(phone);
         const body = await request.json();
         const { supplierId } = body;
 

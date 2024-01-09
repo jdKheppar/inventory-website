@@ -42,12 +42,15 @@ const employeeSchema = new mongoose.Schema({
 // export default Employee;
 
 const createEmployeeModel = (dbName) => {
-  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const PhoneDB = mongoose.createConnection(
+    `${process.env.MONGO_URI}${dbName}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
 
-  return PhoneDB.models.Employee || PhoneDB.model('Employee', employeeSchema );
+  return PhoneDB.models.Employee || PhoneDB.model("Employee", employeeSchema);
 };
 
 export default createEmployeeModel;
