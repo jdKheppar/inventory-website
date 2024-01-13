@@ -52,7 +52,8 @@ const AddEmployee = () => {
                 .then((data) => {
                     alert("Employee added successfully");
                     setFormData(initialEmployee);
-                    console.log(data)})
+                    console.log(data)
+                })
                 .catch((error) => console.error(error));
 
         } catch (error) {

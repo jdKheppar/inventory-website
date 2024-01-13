@@ -5,14 +5,14 @@ import jwt from "jsonwebtoken";
 
 
 export async function POST(request: NextRequest) {
-   
+
     try {
         const reqBody = await request.json()
         const { email, password } = reqBody;
         //check if user exists
         const user = await User.findOne({ email });
-        User.db.close();
-        console.log("user",user);
+
+        console.log("user", user);
         if (!user) {
             console.log("user don't exists");
             return NextResponse.json({ error: "noUser" }, { status: 404 })
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
             httpOnly: true,
 
         })
-
+        User.db.close();
         return response;
 
     } catch (error: any) {

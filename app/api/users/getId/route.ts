@@ -7,7 +7,6 @@ import User from "@/models/userModel";
 
 
 export async function GET(request: any) {
-    await connect("UsersDB");
     try {
         const url = new URL(request.url);
         const emailAddress = url.searchParams.get("email");
@@ -18,7 +17,7 @@ export async function GET(request: any) {
 
         // Use the User model to find the user by name
         const user = await User.findOne({ email: emailAddress });
-
+        user.db.close();
         if (user) {
             return NextResponse.json({ _id: user._id }); // Return the _id corresponding to the eamil
         } else {

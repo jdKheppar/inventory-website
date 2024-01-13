@@ -21,6 +21,10 @@ const ForgetPassword: React.FC = () => {
         try {
 
             const response = await axios.post("/api/users/forgetpassword", user);
+            console.log(response.data);
+            if (response.statusText == "true") {
+                alert("Email sent successfully");
+            }
             toast.success("Login success");
         } catch (error) {
             console.log("Reset failed");

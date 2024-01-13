@@ -64,7 +64,7 @@ const UpdateEmployee = ({ params }: any) => {
                 body: JSON.stringify(formData) // Send the form data to the API
             })
                 .then((response) => response.json())
-                .then((data) =>{
+                .then((data) => {
                     console.log(data);
                     alert("Employee updated successfully");
                 })

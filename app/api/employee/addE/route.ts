@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import createEmployeeModel from "@/models/employeeModel";
-//import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 import jwt from "jsonwebtoken";
 
 const getPhoneFromToken = (request: NextRequest) => {

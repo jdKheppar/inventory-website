@@ -10,8 +10,8 @@ export async function POST(request: NextRequest) {
         console.log(token);
 
         const user = await User.findOne({ verifyToken: token, verifyTokenExpiry: { $gt: Date.now() } });
-        User.db.close();
 
+        console.log("user returned by mdb in verifyemail is: ", user);
         if (!user) {
             return NextResponse.json({ error: "Invalid token" }, { status: 400 })
         }
@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
         user.verifyToken = undefined;
         user.verifyTokenExpiry = undefined;
         await user.save();
-
+        User.db.close();
         return NextResponse.json({
-            message: "Email verified successfully",
+            message: "EmailVerified",
             success: true
         })
 

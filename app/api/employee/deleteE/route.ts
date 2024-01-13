@@ -1,18 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import createEmployeeModel from "@/models/employeeModel";
-//import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
-import jwt from "jsonwebtoken";
+import { getPhoneFromToken } from "@/helpers/getPhoneFromToken";
 
-const getPhoneFromToken = (request: NextRequest) => {
-    try {
-        const token = request.cookies.get("token")?.value || '';
-        const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
-        return decodedToken.phone;
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-
-}
 
 // Delete a supplier from the database
 export async function DELETE(request: any) {

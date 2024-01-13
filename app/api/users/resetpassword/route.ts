@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
         console.log(token);
 
         const user = await User.findOne({ forgotPasswordToken: token, forgotPasswordTokenExpiry: { $gt: Date.now() } });
-        User.db.close();
+
 
         if (!user) {
             return NextResponse.json({ error: "Invalid token" }, { status: 400 })
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         user.forgotPasswordToken = undefined;
         user.forgotPasswordTokenExpiry = undefined;
         await user.save();
-
+        User.db.close();
         return NextResponse.json({
             message: "Email verified successfully",
             success: true

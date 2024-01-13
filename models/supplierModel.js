@@ -21,12 +21,16 @@ const supplierSchema = new mongoose.Schema({
 });
 
 const createSupplierModel = (dbName) => {
-  const PhoneDB=mongoose.createConnection(`${process.env.MONGO_URI}${dbName}?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  console.log("dbName is: ", dbName);
+  const PhoneDB = mongoose.createConnection(
+    `${process.env.MONGO_URI}${dbName}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
 
-  return PhoneDB.models.Supplier || PhoneDB.model('Supplier', supplierSchema );
+  return PhoneDB.models.Supplier || PhoneDB.model("Supplier", supplierSchema);
 };
 
 export default createSupplierModel;
